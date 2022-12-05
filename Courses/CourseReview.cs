@@ -1,4 +1,4 @@
-namespace WestCoastEduBCL.Courses;
+namespace WestCoastEdu.BCL.Courses;
 
 public class CourseReview
 {
