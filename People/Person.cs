@@ -8,10 +8,27 @@ public abstract class Person
     public string LastName { get; init; }
     public string Email { get; init; }
     
-    //All people will need the ability to send & receive messages
+
     public List<Message> Messages { get; set; } = new List<Message>();
 
     protected bool _authenticated = false;
+
+    public virtual bool Find(int id)
+    {
+        //query database for a person with the passed in id
+        return true;
+    }
+
+    public virtual bool Save(int id)
+    {
+        return true;
+    }
+
+    protected virtual bool Validate()
+    {
+        //validate properties and return true if all are valid
+        return true;
+    }
 
     public bool Authenticate(string password)
     {

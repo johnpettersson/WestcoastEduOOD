@@ -16,4 +16,22 @@ public class Student : Person
         CurrentCourses.Add(course);
         course.Students.Add(this);
     }
+
+    public override bool Find(int id)
+    {
+        if(base.Find(id)) //find the person data
+        {
+            //find the course data
+        }
+
+        return true;
+    }
+
+    public override bool Save(int id)
+    {
+        base.Save(id); //save person properties
+        //save students properties
+
+        return true;
+    }
 }

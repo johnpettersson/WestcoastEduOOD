@@ -13,4 +13,14 @@ public class Teacher : Person
         // Maybe validate the lesson somehow, ie. make sure date is within bounds of the course
         course.Lessons.Add(lesson);
     }
+
+    public override bool Find(int id)
+    {
+        if(base.Find(id)) //find the person data
+        {
+            //find the Courses data
+        }
+
+        return true;
+    }
 }

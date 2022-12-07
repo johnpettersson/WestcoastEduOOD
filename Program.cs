@@ -7,9 +7,10 @@ CourseOccasion courseOccasion = new CourseOccasion
     StartDate = new DateOnly(2022, 10, 7), 
     EndDate = new DateOnly(2022, 12, 13) 
 };
-Teacher teacherJohn = new Teacher {FirstName = "John", LastName = "Doe", Email = "john.doe@mail.com" };
-teacherJohn.Courses.Add(courseOccasion);
-courseOccasion.Teachers.Add(teacherJohn);
+
+Teacher teacherBo = new Teacher {FirstName = "Bo", LastName = "Doe", Email = "bo.doe@mail.com" };
+teacherBo.Courses.Add(courseOccasion);
+courseOccasion.Teachers.Add(teacherBo);
 
 Student studentJan = new Student { FirstName = "Jan", LastName = "Berg", Email="jan.berg@mail.com" };
 studentJan.JoinCourse(courseOccasion);
@@ -27,7 +28,7 @@ foreach(var student in courseOccasion.Students)
     Console.WriteLine(student.FirstName + " " + student.LastName);
 }
 
-Console.WriteLine();
+Console.WriteLine("-------------------------------");
 
 Console.WriteLine($"Elev: {studentJan.FirstName} {studentJan.LastName}");
 Console.WriteLine($"{studentJan.CurrentCourses.Count} Nuvarande kurs(er): ");
@@ -36,11 +37,11 @@ foreach(CourseOccasion occasion in studentJan.CurrentCourses)
     Console.WriteLine(occasion.Course.Name);
 }
 
-Console.WriteLine();
+Console.WriteLine("-------------------------------");
 
-Console.WriteLine($"Lärare: {teacherJohn.FirstName} {teacherJohn.LastName}");
-Console.WriteLine($"{teacherJohn.Courses.Count} Nuvarande kurs(er): ");
-foreach(CourseOccasion occasion in teacherJohn.Courses)
+Console.WriteLine($"Lärare: {teacherBo.FirstName} {teacherBo.LastName}");
+Console.WriteLine($"{teacherBo.Courses.Count} Nuvarande kurs(er): ");
+foreach(CourseOccasion occasion in teacherBo.Courses)
 {
     Console.WriteLine(occasion.Course.Name);
 }

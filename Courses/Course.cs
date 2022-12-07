@@ -8,5 +8,5 @@ public class Course
     public string Code { get; set; }
 
     public List<CourseReview> Reviews { get; set; } = new List<CourseReview>();
-    public float AverageReviewValue { get => Reviews.Average((review) => review.Value); }
+    public float AverageReviewValue { get => Reviews.Average(review => review.Value); }
 }
