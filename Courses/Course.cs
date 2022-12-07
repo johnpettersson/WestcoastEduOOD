@@ -7,6 +7,6 @@ public class Course
     public string Name { get; set; }
     public string Code { get; set; }
 
-    public List<CourseReview> Reviews { get; set; } = new List<CourseReview>();
+    public List<Review> Reviews { get; set; } = new List<Review>();
     public float AverageReviewValue { get => Reviews.Average(review => review.Value); }
 }
