@@ -9,7 +9,9 @@ public class CourseOccasion
     public DateOnly StartDate { get; set; }
     public DateOnly EndDate { get; set; }
 
-    public List<Lesson> Lessons { get; set; }
-    public List<Teacher> Teachers { get; set; }
-    public List<Student> Students { get; set; }
+    public bool OnCampus { get; set; }
+
+    public List<Lesson> Lessons { get; set; } = new List<Lesson>();
+    public List<Teacher> Teachers { get; set; } = new List<Teacher>();
+    public List<Student> Students { get; set; } = new List<Student>();
 }

@@ -5,7 +5,7 @@ namespace WestCoastEdu.BCL.People;
 
 public class Teacher : Person
 {
-    public List<CourseOccasion> Courses { get; private set; }
+    public List<CourseOccasion> Courses { get; private set; } = new List<CourseOccasion>();
 
     public void AddLesson(CourseOccasion course, Lesson lesson)
     {
