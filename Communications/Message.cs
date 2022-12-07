@@ -1,5 +1,7 @@
 
-namespace WestCoastEdu.BCL.People; 
+using WestCoastEdu.BCL.People;
+
+namespace WestCoastEdu.BCL.Communications; 
 
 public class Message 
 {

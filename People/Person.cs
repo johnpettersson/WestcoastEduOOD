@@ -1,4 +1,6 @@
 
+using WestCoastEdu.BCL.Communications;
+
 namespace WestCoastEdu.BCL.People;
 
 public abstract class Person // abstract pga ingen Person ska instantieras
