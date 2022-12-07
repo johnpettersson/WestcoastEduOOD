@@ -5,7 +5,7 @@ namespace WestCoastEdu.BCL.Courses;
 public class CourseOccasion
 {
     public int Id { get; set; }
-    public Course Course { get; set; }
+    public Course Course { get; set; }  //medvetet val att välja komposition över arv här, pga en kurs kan vara bunden till flera kurstillfällen
     public DateOnly StartDate { get; set; } 
     public DateOnly EndDate { get; set; }
 

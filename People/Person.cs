@@ -1,7 +1,7 @@
 
 namespace WestCoastEdu.BCL.People;
 
-public abstract class Person
+public abstract class Person // abstract pga ingen Person ska instantieras
 {
     public int Id { get; protected set; }
     public string FirstName { get; init; }
