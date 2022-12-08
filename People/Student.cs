@@ -32,6 +32,7 @@ public class Student : Person
 
     public void JoinCourse(CourseOccasion course)
     {
+        CheckAuthentication();
         // ask course if course has room for new students 
         // register self on the passed course occasion
         // send confirmation email

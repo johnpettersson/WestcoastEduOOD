@@ -9,6 +9,7 @@ public class Teacher : Person
 
     public void AddLesson(CourseOccasion course, Lesson lesson)
     {
+        CheckAuthentication();
         // Schedule a new lesson to the course
         // Maybe validate the lesson somehow, ie. make sure date is within bounds of the course
         course.Lessons.Add(lesson);

@@ -17,7 +17,7 @@ public abstract class Person // abstract pga ingen Person ska instantieras
 
     public virtual bool Find(int id)
     {
-        //query database for a person with the passed in id
+        //query something for a person with the passed in id
         return true;
     }
 
@@ -37,5 +37,10 @@ public abstract class Person // abstract pga ingen Person ska instantieras
         /// TODO: Check if user matches with password in database and set _authenticated if it matches
         _authenticated = true;  
         return _authenticated;
+    }
+    protected void CheckAuthentication()
+    {
+        if(!_authenticated)
+            throw new Exception("User is not authenticated for this action.");
     }
 }

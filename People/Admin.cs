@@ -8,8 +8,7 @@ public class Admin : Person
     
     public Teacher CreateTeacher(string firstName, string lastName, string email)
     {
-        if(!_authenticated)
-            throw new Exception("Must be authenticated to create a teacher");
+        CheckAuthentication();
 
         //Add a teacher to the system, save it in a database etc
         return new Teacher {FirstName = firstName, LastName = lastName, Email = email };
@@ -17,26 +16,25 @@ public class Admin : Person
 
     public Course CreateCourse(/* params... */)
     {
-        if(!_authenticated)
-            throw new Exception("Must be authenticated to create a course");
+        CheckAuthentication();
 
         return new Course();
     }
 
     public CourseOccasion ScheduleCourse(/* params... */)
     {
-        if(!_authenticated)
-            throw new Exception("Must be authenticated to schedule a course");
+        CheckAuthentication();
 
         return new CourseOccasion();
     }
 
     public void CancelCourse(CourseOccasion occasion)
     {
-        if(!_authenticated)
-            throw new Exception("Must be authenticated to cancel a course");
-        
+        CheckAuthentication();
+
         //notify the teacher and the students
         //remove the course
     }
+
+    
 }
