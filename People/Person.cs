@@ -17,12 +17,18 @@ public abstract class Person // abstract pga ingen Person ska instantieras
 
     public virtual bool Find(int id)
     {
-        //query something for a person with the passed in id
+        //find the person with the passed in id
+        //fill properties
         return true;
     }
 
-    public virtual bool Save(int id)
+    public virtual bool Save()
     {
+        if(!Validate())
+            return false;
+        
+        //save properties
+
         return true;
     }
 

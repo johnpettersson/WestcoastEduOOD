@@ -13,6 +13,7 @@ teacherBo.Courses.Add(courseOccasion);
 courseOccasion.Teachers.Add(teacherBo);
 
 Student studentJan = new Student { FirstName = "Jan", LastName = "Berg", Email="jan.berg@mail.com" };
+studentJan.Authenticate("");
 studentJan.JoinCourse(courseOccasion);
 
 Console.WriteLine($"Kurstillfälle: {courseOccasion.Course.Name} {courseOccasion.StartDate} - {courseOccasion.EndDate} Distans: {(courseOccasion.OnCampus ? "Nej" : "Ja")}");

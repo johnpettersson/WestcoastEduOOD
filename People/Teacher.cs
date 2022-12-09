@@ -24,4 +24,13 @@ public class Teacher : Person
 
         return true;
     }
+
+    public override bool Save()
+    {
+        if(!base.Save())
+            return false;
+
+        //save teacher properties
+        return true;
+    }
 }

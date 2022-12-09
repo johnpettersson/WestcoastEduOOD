@@ -5,9 +5,6 @@ namespace WestCoastEdu.BCL.People;
 
 public class Student : Person
 {
-
-    
-
     /// <summary>
     /// A list of course occasions the student is currently enrolled into
     /// </summary>
@@ -50,11 +47,13 @@ public class Student : Person
         return true;
     }
 
-    public override bool Save(int id)
+    public override bool Save()
     {
-        base.Save(id); //save person properties
-        //save students properties
+        if(!base.Save())
+            return false;
 
+        //save person properties
+        //save students properties
         return true;
     }
 }
