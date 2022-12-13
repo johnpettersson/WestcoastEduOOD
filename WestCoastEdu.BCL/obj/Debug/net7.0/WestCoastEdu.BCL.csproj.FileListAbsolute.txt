@@ -1,0 +1,12 @@
+C:\Users\johnp\Desktop\webdev\dotnet\WestcoastEduOOD\WestCoastEdu.BCL\bin\Debug\net7.0\WestCoastEdu.BCL.deps.json
+C:\Users\johnp\Desktop\webdev\dotnet\WestcoastEduOOD\WestCoastEdu.BCL\bin\Debug\net7.0\WestCoastEdu.BCL.dll
+C:\Users\johnp\Desktop\webdev\dotnet\WestcoastEduOOD\WestCoastEdu.BCL\bin\Debug\net7.0\WestCoastEdu.BCL.pdb
+C:\Users\johnp\Desktop\webdev\dotnet\WestcoastEduOOD\WestCoastEdu.BCL\obj\Debug\net7.0\WestCoastEdu.BCL.csproj.AssemblyReference.cache
+C:\Users\johnp\Desktop\webdev\dotnet\WestcoastEduOOD\WestCoastEdu.BCL\obj\Debug\net7.0\WestCoastEdu.BCL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\johnp\Desktop\webdev\dotnet\WestcoastEduOOD\WestCoastEdu.BCL\obj\Debug\net7.0\WestCoastEdu.BCL.AssemblyInfoInputs.cache
+C:\Users\johnp\Desktop\webdev\dotnet\WestcoastEduOOD\WestCoastEdu.BCL\obj\Debug\net7.0\WestCoastEdu.BCL.AssemblyInfo.cs
+C:\Users\johnp\Desktop\webdev\dotnet\WestcoastEduOOD\WestCoastEdu.BCL\obj\Debug\net7.0\WestCoastEdu.BCL.csproj.CoreCompileInputs.cache
+C:\Users\johnp\Desktop\webdev\dotnet\WestcoastEduOOD\WestCoastEdu.BCL\obj\Debug\net7.0\WestCoastEdu.BCL.dll
+C:\Users\johnp\Desktop\webdev\dotnet\WestcoastEduOOD\WestCoastEdu.BCL\obj\Debug\net7.0\refint\WestCoastEdu.BCL.dll
+C:\Users\johnp\Desktop\webdev\dotnet\WestcoastEduOOD\WestCoastEdu.BCL\obj\Debug\net7.0\WestCoastEdu.BCL.pdb
+C:\Users\johnp\Desktop\webdev\dotnet\WestcoastEduOOD\WestCoastEdu.BCL\obj\Debug\net7.0\ref\WestCoastEdu.BCL.dll
