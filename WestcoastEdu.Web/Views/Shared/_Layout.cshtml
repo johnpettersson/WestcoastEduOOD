@@ -5,17 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WestcoastEdu.Web</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <header>
-        <h1>Westcoast Education</h1>
+        <a asp-area="" asp-controller="" asp-action="">
+            <h1>Westcoast Education</h1>
+        </a>
         <nav>
             <ul>
                 <li>
-                    <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                </li>
-                <li>
-                    <a asp-area="" asp-controller="Course" asp-action="List">Courses</a>
+                    <a asp-area="" asp-controller="Course" asp-action="List">KURSER</a>
                 </li>
             </ul>
         </nav>

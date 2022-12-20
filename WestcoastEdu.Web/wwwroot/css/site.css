@@ -7,24 +7,31 @@ header {
   background: linear-gradient(110deg, rgb(255 182 250) 0%, rgb(156 238 255) 100%);
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   padding: 1em;
 }
 
 header h1 {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  user-select: none;
+}
+
+header a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+header nav {
+  margin: 0;
 }
 
 nav ul {
   list-style: none;
+  padding: 0;
 }
 
 nav ul li {
   float: left;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 nav ul li a {
@@ -42,5 +49,12 @@ nav ul li a:visited {
 
 main {
   padding: 1em;
+}
+
+
+
+body > div {
+  display: flex;
+  justify-content: center;
 }
 
