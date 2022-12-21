@@ -1,14 +1,16 @@
-﻿@{
+﻿@model List<WestcoastEdu.BCL.Courses.Course>
+
+@{
     ViewData["Title"] = "All Courses";
 }
 
-<div class="text-center">
-    <h1 class="display-4">All Courses</h1>
+<div>
+    <h1>Kurskatalog</h1>
     <ul>
-        <li>idk 101</li>
-        <li>something</li>
-        <li>something else</li>
-        <li>a course</li>
-        <li>anotehr course</li>
+        
+        @foreach (var course in Model)
+        {
+            <li><a asp-action="show" asp-route-id=@course.Id}>@course.Name</a></li>
+        }
     </ul>
 </div>

@@ -1,7 +1,7 @@
 
-using WestCoastEdu.BCL.Courses;
+using WestcoastEdu.BCL.Courses;
 
-namespace WestCoastEdu.BCL.People;
+namespace WestcoastEdu.BCL.People;
 
 public class Teacher : Person
 {

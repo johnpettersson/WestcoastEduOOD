@@ -1,7 +1,7 @@
 
-using WestCoastEdu.BCL.People;
+using WestcoastEdu.BCL.People;
 
-namespace WestCoastEdu.BCL.Communications; 
+namespace WestcoastEdu.BCL.Communications; 
 
 public class Message 
 {

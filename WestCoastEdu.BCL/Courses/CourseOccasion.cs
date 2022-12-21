@@ -1,6 +1,6 @@
-using WestCoastEdu.BCL.People;
+using WestcoastEdu.BCL.People;
 
-namespace WestCoastEdu.BCL.Courses;
+namespace WestcoastEdu.BCL.Courses;
 
 public class CourseOccasion
 {

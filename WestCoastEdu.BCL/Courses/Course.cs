@@ -1,5 +1,5 @@
 
-namespace WestCoastEdu.BCL.Courses;
+namespace WestcoastEdu.BCL.Courses;
 
 public class Course
 {

@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WestCoastEdu.BCL\WestCoastEdu.BCL.csproj" />
+    <ProjectReference Include="..\WestcoastEdu.BCL\WestcoastEdu.BCL.csproj" />
   </ItemGroup>
 
 </Project>

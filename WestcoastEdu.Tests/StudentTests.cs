@@ -1,5 +1,5 @@
-using WestCoastEdu.BCL.People;
-using WestCoastEdu.BCL.Courses;
+using WestcoastEdu.BCL.People;
+using WestcoastEdu.BCL.Courses;
 
 namespace WestcoastEdu.Tests;
 

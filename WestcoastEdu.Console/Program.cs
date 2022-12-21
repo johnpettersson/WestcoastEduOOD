@@ -1,5 +1,5 @@
-﻿using WestCoastEdu.BCL.Courses;
-using WestCoastEdu.BCL.People;
+﻿using WestcoastEdu.BCL.Courses;
+using WestcoastEdu.BCL.People;
 
 CourseOccasion courseOccasion = new CourseOccasion 
 { 
