@@ -5,12 +5,15 @@
 }
 
 <div class="container">
-    <h1 class="title">Kurskatalog</h1>
+    
+    <h1 class="title">Kurskatalog: @Model.Count Kurser</h1>
+    
     <ul>
-        
-        @foreach (var course in Model)
-        {
-            <li><a asp-action="show" asp-route-id=@course.Id}>@course.Name</a></li>
-        }
+    @foreach (var course in Model)
+    {
+        <li class="is-size-4"><a asp-controller="course" asp-action="show" asp-route-id="@course.Id">@course.Name</a></li>
+    }
     </ul>
+    
 </div>
+
