@@ -3,32 +3,49 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WestcoastEdu.Web</title>
+    <title>@ViewData["Title"] - Westcoast Education</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 
 </head>
 <body>
     <header>
-        <a asp-area="" asp-controller="" asp-action="">
-            <h1>Westcoast Education</h1>
-        </a>
-        <nav>
-            <ul>
-                <li>
-                    <a asp-area="" asp-controller="Course" asp-action="List">KURSER</a>
-                </li>
-            </ul>
+        
+        <nav class="navbar is-dark" role="navigation" aria-label="main-navigation">
+            <div class="navbar-brand">
+                <a asp-action="Index" asp-controller="Home" class="navbar-item">
+                    Westcoast Education
+                </a>
+
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div class="navbar-menu" id="navMenu">
+                <div class="navbar-start">
+                    <a asp-action="Index" asp-controller="Home" class="navbar-item">Start</a>
+
+                    <a asp-controller="course" asp-action="list" class="navbar-item">Kurskatalog</a>
+                </div>
+
+
+            </div>
+
         </nav>
     </header>
-    <div>
-        <main role="main">
-            @RenderBody()
-        </main>
-    </div>
+    
+    <section class="section">
+        @RenderBody()
+    </section>
+
+        
     <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>
