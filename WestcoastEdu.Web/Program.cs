@@ -17,7 +17,7 @@ using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 try
 {
-    var context = services.GetService<WestcoastEduDBContext>();
+    var context = services.GetRequiredService<WestcoastEduDBContext>();
     await context.Database.MigrateAsync();
     await SeedData.LoadCourses(context);
 }
