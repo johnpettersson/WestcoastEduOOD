@@ -1,0 +1,42 @@
+[
+    {
+        "Code": "13-ABD2",
+        "Name": "Data och algoritmer"
+    },
+    {
+        "Code": "14-RCT1",
+        "Name": "React för nybörjare"
+    },
+    {
+        "Code": "14-RCT2",
+        "Name": "React fortsättningskurs"
+    },
+    {
+        "Code": "14-RCT3",
+        "Name": "React och mobila enheter"
+    },
+    {
+        "Code": "15-CSS1",
+        "Name": "CSS Introduktionskurs"
+    },
+    {
+        "Code": "15-CSS2",
+        "Name": "CSS ramverk"
+    },
+    {
+        "Code": "15-CSS3",
+        "Name": "CSS är konst(igt)?"
+    },
+    {
+        "Code": "16-ETH1",
+        "Name": "Databaser 101"
+    },
+    {
+        "Code": "16-ETH2",
+        "Name": "Databaser 201"
+    },
+    {
+        "Code": "17-CAT",
+        "Name": "Egyptologi för nybörjare"
+    }
+]
