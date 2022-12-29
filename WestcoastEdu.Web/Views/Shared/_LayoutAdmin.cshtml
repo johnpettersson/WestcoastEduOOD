@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Westcoast Education</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+</head>
+<body>
+    <header>
+        
+        <nav class="navbar has-background-warning" role="navigation" aria-label="main-navigation">
+            <div class="navbar-brand">
+                <a asp-action="Index" asp-controller="Admin" class="navbar-item">
+                    Westcoast Education Admin
+                </a>
+                <a role="button" id="burger" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div class="navbar-menu" id="navMenu">
+                <div class="navbar-end">
+                    <a asp-controller="Home" asp-action="Index"class="navbar-item">Gå tillbaka till användarsidan</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <section class="section">
+        @RenderBody()
+    </section>
+
+            
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

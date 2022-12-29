@@ -1,0 +1,41 @@
+﻿
+@model WestcoastEdu.BCL.Courses.Course
+
+@{
+    ViewData["Title"] = "Admin";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container">
+
+    <h1 class="title">Westcoast Education Admin</h1>
+    <h2 class="subtitle">Skapa ny Kurs: @Model.Name</h2>
+
+    <div class="container">
+        <form asp-action="new" method="post">
+            <div class="field">
+                <div class="control">
+                    <label class="label">Namn</label>
+                    <input class="input" asp-for="Name">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <label class="label" for="">Kod</label>
+                    <input class="input" asp-for="Code">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button type="submit" class="button is-success">Spara</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    
+</div>
+
+
+    

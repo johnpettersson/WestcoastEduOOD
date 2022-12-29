@@ -1,0 +1,44 @@
+﻿
+@model IList<WestcoastEdu.BCL.Courses.Course>
+
+@{
+    ViewData["Title"] = "Admin";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container">
+
+    <h1 class="title">Westcoast Education Admin</h1>
+    <h2 class="subtitle">Databasen innehåller nedanstående kurser</h2>
+
+    <table class="table is-bordered is-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Course Code</th>
+                <th scope="col">Course Name</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.Id</td>
+                <td>@course.Code</td>
+                <td>@course.Name</td>
+                <td><a asp-action="edit" asp-route-id=@course.Id>Edit</a></td>
+            </tr>
+        }
+        </tbody>
+
+    </table>
+
+    <a asp-action="new" class="button is-success">Add New Course</a>
+
+    
+</div>
+
+
+    
