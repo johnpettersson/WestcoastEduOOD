@@ -18,6 +18,7 @@
                 <th scope="col">Course Code</th>
                 <th scope="col">Course Name</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
 
@@ -29,6 +30,7 @@
                 <td>@course.Code</td>
                 <td>@course.Name</td>
                 <td><a asp-action="edit" asp-route-id=@course.Id>Edit</a></td>
+                <td><a asp-action="delete" asp-route-id=@course.Id class="has-text-danger">Delete</a></td>
             </tr>
         }
         </tbody>

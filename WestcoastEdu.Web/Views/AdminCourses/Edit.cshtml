@@ -13,7 +13,7 @@
     
     <div class="columns">
         <div class="column is-half-desktop">
-            <form asp-action="new" method="post">
+            <form asp-action="edit" asp-route-id=@Model.Id method="post">
                     <div class="field">
                         <div class="control">
                             <label class="label">Namn</label>
