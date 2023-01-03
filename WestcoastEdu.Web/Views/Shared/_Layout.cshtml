@@ -4,48 +4,46 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Westcoast Education</title>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"> *@
+    <script src="https://kit.fontawesome.com/c26731ab0b.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
         
         <nav class="navbar is-dark" role="navigation" aria-label="main-navigation">
+
             <div class="navbar-brand">
                 <a asp-action="Index" asp-controller="Home" class="navbar-item">
                     Westcoast Education
-                </a>
-
-                <a role="button" id="burger" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
                 </a>
             </div>
 
             <div class="navbar-menu" id="navMenu">
                 <div class="navbar-start">
+                    
                     <a asp-action="Index" asp-controller="Home" class="navbar-item">Start</a>
 
                     <a asp-controller="course" asp-action="list" class="navbar-item">Kurskatalog</a>
+
                 </div>
-
-
             </div>
+
 
         </nav>
     </header>
     
-    <section class="section">
+    <main class="section">
         @RenderBody()
-    </section>
+    </main>
 
-        
+    <footer>
+        <p><a asp-controller="admin" asp-action="index" class="navbar-item"><i class="fa-solid fa-gear"></i></a>
+    </footer>        
     <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>
