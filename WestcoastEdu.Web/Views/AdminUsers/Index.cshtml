@@ -1,0 +1,52 @@
+﻿
+@model IList<WestcoastEdu.Web.Models.User>
+
+@{
+    ViewData["Title"] = "Admin";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container">
+
+    <h1 class="title">Westcoast Education Admin</h1>
+    <h2 class="subtitle">Databasen innehåller nedanstående användare</h2>
+
+    <table class="table is-bordered is-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name </th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Is Teacher?</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.Email</td>
+                <td>@user.PhoneNumber</td>
+                <td>@user.IsTeacher</td>
+                <td><a asp-action="edit" asp-route-id=@user.Id>Edit</a></td>
+                <td><a asp-action="delete" asp-route-id=@user.Id class="has-text-danger">Delete</a></td>
+            </tr>
+        }
+        </tbody>
+
+    </table>
+
+    <a asp-action="new" class="button is-success">Add New User</a>
+
+    
+</div>
+
+
+    

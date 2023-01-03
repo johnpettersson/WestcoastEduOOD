@@ -3,14 +3,14 @@ using WestcoastEdu.BCL.Communications;
 
 namespace WestcoastEdu.BCL.People;
 
-public abstract class Person // abstract pga ingen Person ska instantieras
+public class Person // abstract pga ingen Person ska instantieras
 {
     public int Id { get; protected set; }
     public string FirstName { get; init; }
     public string LastName { get; init; }
     public string Email { get; init; }
     
-
+    
     public List<Message> Messages { get; set; } = new List<Message>();
 
     protected bool _authenticated = false;

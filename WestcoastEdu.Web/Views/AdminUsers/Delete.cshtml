@@ -1,5 +1,5 @@
 ﻿
-@model WestcoastEdu.BCL.Courses.Course
+@model WestcoastEdu.Web.Models.User
 
 @{
     ViewData["Title"] = "Admin";
@@ -8,15 +8,14 @@
 
 <div class="container">
     <h1 class="title">Westcoast Education Admin</h1>
-    <h2 class="subtitle">Ta bort kurs: @Model.Name</h2>
+    <h2 class="subtitle">Ta bort användare: @Model.FirstName @Model.LastName</h2>
 
-    
     <div class="columns">
         <div class="column is-half-desktop">
             <form asp-action="delete" method="post" asp-route-id=@Model.Id>
                     <div class="field">
                         <div class="control">
-                            <label class="label">Är du säker på att du vill ta bort kursen?</label>
+                            <label class="label">Är du säker på att du vill ta bort användaren?</label>
                             <input type="submit" class="button is-danger" value="Ja, jag är säker!">
                         </div>
                     </div>

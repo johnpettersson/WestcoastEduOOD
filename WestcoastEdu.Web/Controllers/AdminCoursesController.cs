@@ -6,6 +6,7 @@ using WestcoastEdu.Web.Data;
 namespace WestcoastEdu.Web.Controllers;
 
 
+[Route("admin/courses/[action]")]
 public class AdminCoursesController : Controller
 {
     private readonly WestcoastEduDBContext context;
@@ -71,11 +72,10 @@ public class AdminCoursesController : Controller
         return Content("Det är tyvärr så att det blev lite fel här.");
     }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Delete(Course coursep)
+    [HttpPost, ActionName("delete"), ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var course = await context.Courses.FirstOrDefaultAsync(course => course.Id == coursep.Id);
+        var course = await context.Courses.FirstOrDefaultAsync(course => course.Id == id);
         if(course is null)
             return Content("Det är tyvärr så att det blev lite fel här.");
 

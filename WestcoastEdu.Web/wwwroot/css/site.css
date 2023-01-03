@@ -16,11 +16,18 @@ body {
     height: 100%;
 }
 
+a {
+    color: black;
+}
+a:visited {
+    color: inherit;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
-    background-color: #222222;
-    color: #FFF;
+    background-color: var(--navbar-bg);
+    color: var(--navbar-color);
     align-items: flex-end;
     font-size: 1.5em;
     text-decoration: none;
@@ -40,7 +47,7 @@ body {
     color: inherit;
 }
 .navbar a.navbar-item:hover{
-    background-color: #404040;
+    background-color: var(--navbar-item-hover);
 }
 
 
@@ -83,10 +90,9 @@ main.section {
     height: 100%;
 }
 
-
 footer {
     display: flex;
-    justify-content: center;
+    justify-content: end;
     padding: 0.5rem;
     background-color: #222222;
     color: #FFF;
@@ -95,3 +101,34 @@ footer {
 footer a:visited {
     color: inherit;
 }
+
+
+tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+td, th {
+    padding: 0.5rem;
+}
+
+
+input {
+    display: inline-block;
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    background-color: rgb(68, 68, 68);
+    color: white;
+}
+input[type=submit]:hover {
+    background-color: rgb(110, 110, 110);
+}
+
+.field {
+    margin: 5px 0;
+}
+

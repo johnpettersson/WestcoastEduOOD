@@ -1,0 +1,54 @@
+﻿
+@model WestcoastEdu.Web.Models.User
+
+@{
+    ViewData["Title"] = "Admin";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container">
+
+    <h1 class="title">Westcoast Education Admin</h1>
+    <h2 class="subtitle">Uppdatera användare: @Model.FirstName @Model.LastName</h2>
+
+    <form asp-action="edit" method="post" asp-route-id=@Model.Id>
+        <div class="field">
+            <div class="control">
+                <label class="label">@Html.DisplayNameFor(model => model.FirstName)</label>
+                <input class="input" asp-for="FirstName">
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <label class="label">@Html.DisplayNameFor(model => model.LastName)</label>
+                <input class="input" asp-for="LastName">
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <label class="label">@Html.DisplayNameFor(model => model.Email)</label>
+                <input class="input" asp-for="Email">
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <label class="label">@Html.DisplayNameFor(model => model.PhoneNumber)</label>
+                <input class="input" asp-for="PhoneNumber">
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <label class="label">@Html.DisplayNameFor(model => model.IsTeacher)</label>
+                <input class="input" asp-for="IsTeacher">
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <input type="submit" class="button is-success" value="Spara" />
+            </div>
+        </div>
+    </form>
+</div>
+
+
+    
