@@ -1,42 +1,56 @@
 [
     {
         "Code": "13-ABD2",
-        "Name": "Data och algoritmer"
+        "Name": "Data och algoritmer",
+        "StartDate": "2023-03-12",
+        "LengthInWeeks": 12
     },
     {
         "Code": "14-RCT1",
-        "Name": "React för nybörjare"
+        "Name": "React för nybörjare",
+        "StartDate": "2023-02-15",
+        "LengthInWeeks": 6
     },
     {
         "Code": "14-RCT2",
-        "Name": "React fortsättningskurs"
+        "Name": "React fortsättningskurs",
+        "StartDate": "2023-02-15",
+        "LengthInWeeks": 6
     },
     {
         "Code": "14-RCT3",
-        "Name": "React och mobila enheter"
+        "Name": "React och mobila enheter",
+        "StartDate": "2023-03-12",
+        "LengthInWeeks": 6
     },
     {
         "Code": "15-CSS1",
-        "Name": "CSS Introduktionskurs"
+        "Name": "CSS Introduktionskurs",
+        "StartDate": "2023-01-09",
+        "LengthInWeeks": 4
     },
     {
         "Code": "15-CSS2",
-        "Name": "CSS ramverk"
-    },
-    {
-        "Code": "15-CSS3",
-        "Name": "CSS är konst(igt)?"
+        "Name": "CSS ramverk",
+        "StartDate": "2023-01-09",
+        "LengthInWeeks": 4
     },
     {
         "Code": "16-ETH1",
-        "Name": "Databaser 101"
+        "Name": "Databaser 101",
+        "StartDate": "2023-01-09",
+        "LengthInWeeks": 8
     },
     {
         "Code": "16-ETH2",
-        "Name": "Databaser 201"
+        "Name": "Databaser 201",
+        "StartDate": "2023-01-09",
+        "LengthInWeeks": 8
     },
     {
         "Code": "17-CAT",
-        "Name": "Egyptologi för nybörjare"
+        "Name": "Egyptologi för nybörjare",
+        "StartDate": "2023-01-09",
+        "LengthInWeeks": 16
     }
 ]

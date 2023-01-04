@@ -17,6 +17,8 @@
                 <th scope="col">ID</th>
                 <th scope="col">Course Code</th>
                 <th scope="col">Course Name</th>
+                <th scope="col">Start Date</th>
+                <th scope="col"># of Weeks</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -29,6 +31,8 @@
                 <td>@course.Id</td>
                 <td>@course.Code</td>
                 <td>@course.Name</td>
+                <td>@course.StartDate.ToShortDateString()</td>
+                <td>@course.LengthInWeeks</td>
                 <td><a asp-action="edit" asp-route-id=@course.Id>Edit</a></td>
                 <td><a asp-action="delete" asp-route-id=@course.Id class="has-text-danger">Delete</a></td>
             </tr>

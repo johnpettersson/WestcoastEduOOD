@@ -21,15 +21,12 @@
                 <a asp-action="Index" asp-controller="Admin" class="navbar-item">
                     Westcoast Education Admin
                 </a>
-                <a role="button" id="burger" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
             </div>
             <div class="navbar-menu" id="navMenu">
-                <div class="navbar-end">
+                <div class="navbar-start">
                     <a asp-controller="Home" asp-action="Index"class="navbar-item">Gå tillbaka till användarsidan</a>
+                    <a asp-controller="AdminCourses" asp-action="list"class="navbar-item">Kurser</a>
+                    <a asp-controller="AdminUsers" asp-action="list"class="navbar-item">Användare</a>
                 </div>
             </div>
         </nav>

@@ -1,0 +1,23 @@
+[
+    {
+        "FirstName": "John",
+        "LastName": "Pettersson",
+        "Email": "john.petterson@gmail.com",
+        "PhoneNumber": "073945034",
+        "IsTeacher": false
+    },
+    {
+        "FirstName": "Magnus",
+        "LastName": "Ladulås",
+        "Email": "magnus.ladulås@gmail.com",
+        "PhoneNumber": "073403304",
+        "IsTeacher": false
+    },
+    {
+        "FirstName": "Gustav",
+        "LastName": "Vasa",
+        "Email": "gustav.vasa@gmail.com",
+        "PhoneNumber": "079549303",
+        "IsTeacher": true
+    }
+]

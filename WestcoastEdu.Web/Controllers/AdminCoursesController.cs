@@ -19,7 +19,6 @@ public class AdminCoursesController : Controller
     public async Task<IActionResult> List() 
     {
         var courses = await context.Courses.ToListAsync();
-
         return View("Index", courses);
     }
 
@@ -42,10 +41,10 @@ public class AdminCoursesController : Controller
     {
         var course = await context.Courses.FirstOrDefaultAsync(course => course.Id == id);
 
-        if(course is not null)
-            return View("Edit", course);
+        if(course is null)
+            return NotFound();
 
-        return Content("Det är tyvärr så att det blev lite fel här.");
+        return View("Edit", course);
     }
 
     [HttpPost]
@@ -53,10 +52,13 @@ public class AdminCoursesController : Controller
     {
         var courseToUpdate = await context.Courses.FirstOrDefaultAsync(course => course.Id == id);
         if(courseToUpdate is null)
-            return Content("Det är tyvärr så att det blev lite fel här.");
+            return NotFound();
 
         courseToUpdate.Name = course.Name;
         courseToUpdate.Code = course.Code;
+        courseToUpdate.StartDate = course.StartDate;
+        courseToUpdate.LengthInWeeks = course.LengthInWeeks;
+
         context.Courses.Update(courseToUpdate);
         await context.SaveChangesAsync();
         return RedirectToAction(nameof(this.List));
@@ -66,10 +68,10 @@ public class AdminCoursesController : Controller
     {
         var course = await context.Courses.FirstOrDefaultAsync(course => course.Id == id);
 
-        if(course is not null)
-            return View("Delete", course);
+        if(course is null)
+            return NotFound();
 
-        return Content("Det är tyvärr så att det blev lite fel här.");
+        return View("Delete", course);
     }
 
     [HttpPost, ActionName("delete"), ValidateAntiForgeryToken]
@@ -77,7 +79,7 @@ public class AdminCoursesController : Controller
     {
         var course = await context.Courses.FirstOrDefaultAsync(course => course.Id == id);
         if(course is null)
-            return Content("Det är tyvärr så att det blev lite fel här.");
+            return NotFound();
 
         context.Courses.Remove(course);
         await context.SaveChangesAsync();
