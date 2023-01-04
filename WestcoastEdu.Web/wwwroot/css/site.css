@@ -4,86 +4,24 @@
     padding: 0;
 }
 
-
 html {
     height: 100%;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
     display:flex;
     flex-direction: column;
     height: 100%;
 }
 
-a {
-    color: black;
-}
-a:visited {
-    color: inherit;
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    background-color: var(--navbar-bg);
-    color: var(--navbar-color);
-    align-items: flex-end;
-    font-size: 1.5em;
-    text-decoration: none;
-}
-
-.navbar-start {
-    display: flex;
-}
-
-.navbar a.navbar-item {
-    display: flex;
-    text-decoration: none;
-    padding: 16px;
-}
-.navbar a.navbar-item:visited {
-    text-decoration: none;
-    color: inherit;
-}
-.navbar a.navbar-item:hover{
-    background-color: var(--navbar-item-hover);
-}
-
-
-
 .section {
     display: flex;
-    max-width: 1024px;
     padding: 3rem;
     margin: 16px;
 }
 
-@media screen and (max-width: 1024px) {
-    .section {
-        padding: 0;
-    }
-}
-
-
-
-
-.title {
-    font-size: 2rem;
-    font-weight: 600;
-}
-
-.subtitle {
-    font-size: 1.25rem;
-    font-weight: 400;
-}
-
 li {
     list-style: none;
-}
-
-.is-size-4 {
-    font-size: 1.5rem;
 }
 
 main.section {
@@ -98,11 +36,6 @@ footer {
     color: #FFF;
 }
 
-footer a:visited {
-    color: inherit;
-}
-
-
 tr:nth-child(even) {
     background-color: #f1f1f1;
 }
@@ -110,25 +43,23 @@ td, th {
     padding: 0.5rem;
 }
 
-
-input {
-    display: inline-block;
-    width: 100%;
-    border: 1px solid #ccc;
-    padding: 8px 12px;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-input[type=submit] {
-    background-color: rgb(68, 68, 68);
-    color: white;
-}
-input[type=submit]:hover {
-    background-color: rgb(110, 110, 110);
-}
-
-.field {
-    margin: 5px 0;
-}
-
+dl {
+    display: flex;
+    flex-flow: row wrap;
+    border: solid #333;
+    border-width: 1px 1px 0 0;
+  }
+  dt {
+    flex-basis: 20%;
+    background: #333;
+    text-align: right;
+    color: #fff;
+    padding: 1rem;
+  }
+  dd {
+    flex-basis: 70%;
+    flex-grow: 1;
+    margin: 0;
+    border-bottom: 1px solid #333;
+    padding: 1rem;
+  }
