@@ -1,5 +1,4 @@
-﻿
-@model WestcoastEdu.BCL.Courses.Course
+﻿@model WestcoastEdu.Web.Models.Course
 
 @{
     ViewData["Title"] = "Admin";
@@ -19,6 +18,12 @@
                     <input class="input" asp-for="Name">
                 </div>
             </div>
+                <div class="field">
+                    <div class="control">
+                        <label class="label">@Html.DisplayNameFor(m => m.Title)</label>
+                        <input class="input" asp-for="Title">
+                    </div>
+                </div>
             <div class="field">
                 <div class="control">
                     <label class="label" for="">@Html.DisplayNameFor(m => m.Code)</label>

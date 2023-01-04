@@ -1,0 +1,21 @@
+
+input {
+    display: inline-block;
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    background-color: rgb(68, 68, 68);
+    color: white;
+}
+input[type=submit]:hover {
+    background-color: rgb(110, 110, 110);
+}
+
+.field {
+    margin: 5px 0;
+}

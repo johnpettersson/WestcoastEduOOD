@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WestcoastEdu.BCL.Courses;
 using WestcoastEdu.Web.Data;
 using WestcoastEdu.Web.Models;
 
@@ -42,10 +41,10 @@ public class AdminUsersController : Controller
     {
         var user = await context.Users.FirstOrDefaultAsync(user => user.Id == id);
 
-        if(user is not null)
-            return View("Edit", user);
+        if(user is null)
+            return NotFound();
 
-        return Content("Det är tyvärr så att det blev lite fel här.");
+        return View("Edit", user);
     }
 
     [HttpPost]
@@ -54,7 +53,7 @@ public class AdminUsersController : Controller
         var userToUpdate = await context.Users.FirstOrDefaultAsync(course => course.Id == id);
 
         if(userToUpdate is null)
-            return Content("Det är tyvärr så att det blev lite fel här.");
+            return NotFound();
 
         userToUpdate.FirstName = user.FirstName;
         userToUpdate.LastName = user.LastName;
@@ -71,10 +70,10 @@ public class AdminUsersController : Controller
     {
         var user = await context.Users.FirstOrDefaultAsync(user => user.Id == id);
 
-        if(user is not null)
-            return View("Delete", user);
+        if(user is null)
+            return NotFound();
 
-        return Content("Det är tyvärr så att det blev lite fel här.");
+        return View("Delete", user);
     }
 
     [HttpPost, ActionName("delete"), ValidateAntiForgeryToken]

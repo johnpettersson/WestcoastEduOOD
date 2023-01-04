@@ -1,5 +1,4 @@
-﻿
-@model IList<WestcoastEdu.BCL.Courses.Course>
+﻿@model List<WestcoastEdu.Web.Models.Course>
 
 @{
     ViewData["Title"] = "Admin";
@@ -17,6 +16,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Course Code</th>
                 <th scope="col">Course Name</th>
+                <th scope="col">Title</th>
                 <th scope="col">Start Date</th>
                 <th scope="col"># of Weeks</th>
                 <th></th>
@@ -31,6 +31,7 @@
                 <td>@course.Id</td>
                 <td>@course.Code</td>
                 <td>@course.Name</td>
+                <td>@course.Title</td>
                 <td>@course.StartDate.ToShortDateString()</td>
                 <td>@course.LengthInWeeks</td>
                 <td><a asp-action="edit" asp-route-id=@course.Id>Edit</a></td>
@@ -41,7 +42,7 @@
 
     </table>
 
-    <a asp-action="new" class="button is-success">Add New Course</a>
+    <a asp-action="new" class="button is-success">Add a New Course</a>
 
     
 </div>

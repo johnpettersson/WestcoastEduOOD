@@ -1,0 +1,29 @@
+
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--navbar-bg);
+    color: var(--navbar-color);
+    align-items: flex-end;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+.navbar-start {
+    display: flex;
+}
+
+.navbar a.navbar-item {
+    display: flex;
+    text-decoration: none;
+    padding: 16px;
+}
+.navbar a.navbar-item:visited {
+    text-decoration: none;
+    color: inherit;
+}
+.navbar a.navbar-item:hover{
+    background-color: var(--navbar-item-hover);
+}

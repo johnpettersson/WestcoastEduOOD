@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WestcoastEdu.BCL.Courses;
+using WestcoastEdu.Web.Models;
 using WestcoastEdu.Web.Data;
 
 namespace WestcoastEdu.Web.Controllers;
@@ -55,6 +55,7 @@ public class AdminCoursesController : Controller
             return NotFound();
 
         courseToUpdate.Name = course.Name;
+        courseToUpdate.Title = course.Title;
         courseToUpdate.Code = course.Code;
         courseToUpdate.StartDate = course.StartDate;
         courseToUpdate.LengthInWeeks = course.LengthInWeeks;

@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using WestcoastEdu.BCL.Courses;
 using WestcoastEdu.Web.Models;
 
 namespace WestcoastEdu.Web.Data;

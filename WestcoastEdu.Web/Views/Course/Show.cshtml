@@ -1,0 +1,26 @@
+﻿@model WestcoastEdu.Web.Models.Course
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container">
+    
+    <h1 class="title">Kursdetaljer: @Model.Name</h1>
+    
+    <dl>
+        <dt>Titel: </dt>
+        <dd>@Model.Title</dd>
+
+        <dt>Kod: </dt>
+        <dd>@Model.Code</dd>
+
+        <dt>Startdatum: </dt>
+        <dd>@Model.StartDate.ToShortDateString()</dd>
+
+        <dt>Antal veckor: </dt>
+        <dd>@Model.LengthInWeeks</dd>   
+    </dl>
+    
+</div>
+

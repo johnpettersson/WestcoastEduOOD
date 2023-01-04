@@ -11,6 +11,9 @@
     @* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"> *@
 
     <link rel="stylesheet" href="~/css/admin_colors.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/typography.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/forms.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
@@ -19,7 +22,7 @@
         <nav class="navbar has-background-warning" role="navigation" aria-label="main-navigation">
             <div class="navbar-brand">
                 <a asp-action="Index" asp-controller="Admin" class="navbar-item">
-                    Westcoast Education Admin
+                    Westcoast Education <span class="underline">ADMIN</span>
                 </a>
             </div>
             <div class="navbar-menu" id="navMenu">

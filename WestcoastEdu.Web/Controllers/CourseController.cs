@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WestcoastEdu.BCL.Courses;
+using WestcoastEdu.Web.Models;
 using WestcoastEdu.Web.Data;
 
 namespace WestcoastEdu.Web.Controllers;
@@ -19,5 +19,15 @@ public class CourseController : Controller
         List<Course> courses = await context.Courses.ToListAsync();
 
         return View(courses);
+    }
+
+    public async Task<IActionResult> Show(int id) 
+    {
+        Course? course = await context.Courses.FirstOrDefaultAsync(c => c.Id == id);
+
+        if(course is null)
+            return NotFound();
+
+        return View("Show", course);
     }
 }

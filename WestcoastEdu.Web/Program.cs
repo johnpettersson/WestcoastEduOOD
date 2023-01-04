@@ -25,7 +25,6 @@ try
 catch (Exception ex)
 {
     Console.WriteLine("{0} - {1} "  + ex.Message, ex.InnerException!.Message);
-    throw ex;
 }
 
 // Configure the HTTP request pipeline.
