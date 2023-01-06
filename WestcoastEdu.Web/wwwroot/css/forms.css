@@ -19,3 +19,8 @@ input[type=submit]:hover {
 .field {
     margin: 5px 0;
 }
+
+
+.error {
+    color: #FF0000;
+}

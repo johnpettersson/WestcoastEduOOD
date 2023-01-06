@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WestcoastEdu.Web.Models;
 using WestcoastEdu.Web.Data;
+using WestcoastEdu.Web.ViewModels;
 
 namespace WestcoastEdu.Web.Controllers;
 
@@ -24,13 +25,29 @@ public class AdminCoursesController : Controller
 
     public IActionResult New()
     {
-        Course course = new();
-        return View("New", course);
+        CourseCreateViewModel model = new();
+        return View("New", model);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> New(Course course)
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> New(CourseCreateViewModel viewModel)
     {
+        if(viewModel is null)
+            return NotFound();
+
+        if(!ModelState.IsValid)
+            return View("New", viewModel);
+
+
+        Course course = new Course
+        {
+            Code = viewModel.Code,
+            Name = viewModel.Name,
+            Title = viewModel.Title,
+            StartDate = viewModel.StartDate,
+            LengthInWeeks = viewModel.LengthInWeeks
+        };
+
         await context.Courses.AddAsync(course);
         await context.SaveChangesAsync();
 
@@ -44,24 +61,39 @@ public class AdminCoursesController : Controller
         if(course is null)
             return NotFound();
 
-        return View("Edit", course);
+        var viewModel = new CourseEditViewModel
+        {
+            Id = course.Id,
+            Name = course.Name,
+            Title = course.Title,
+            Code = course.Code,
+            StartDate = course.StartDate,
+            LengthInWeeks = course.LengthInWeeks
+        };
+
+        return View("Edit", viewModel);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Edit(int id, Course course) 
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, CourseEditViewModel viewModel) 
     {
-        var courseToUpdate = await context.Courses.FirstOrDefaultAsync(course => course.Id == id);
-        if(courseToUpdate is null)
+        if(!ModelState.IsValid)
+            return View("Edit", viewModel);
+
+        var course = await context.Courses.FirstOrDefaultAsync(course => course.Id == id);
+
+        if(course is null)
             return NotFound();
 
-        courseToUpdate.Name = course.Name;
-        courseToUpdate.Title = course.Title;
-        courseToUpdate.Code = course.Code;
-        courseToUpdate.StartDate = course.StartDate;
-        courseToUpdate.LengthInWeeks = course.LengthInWeeks;
+        course.Name = viewModel.Name;
+        course.Title = viewModel.Title;
+        course.Code = viewModel.Code;
+        course.StartDate = viewModel.StartDate;
+        course.LengthInWeeks = viewModel.LengthInWeeks;
 
-        context.Courses.Update(courseToUpdate);
+        context.Courses.Update(course);
         await context.SaveChangesAsync();
+
         return RedirectToAction(nameof(this.List));
     }
 

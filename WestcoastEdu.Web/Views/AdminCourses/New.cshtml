@@ -1,4 +1,4 @@
-﻿@model WestcoastEdu.Web.Models.Course
+﻿@model WestcoastEdu.Web.ViewModels.CourseCreateViewModel
 
 @{
     ViewData["Title"] = "Admin";
@@ -16,30 +16,35 @@
                 <div class="control">
                     <label class="label">@Html.DisplayNameFor(m => m.Name)</label>
                     <input class="input" asp-for="Name">
+                    <span asp-validation-for="Name" class="error"></span>
                 </div>
             </div>
-                <div class="field">
-                    <div class="control">
-                        <label class="label">@Html.DisplayNameFor(m => m.Title)</label>
-                        <input class="input" asp-for="Title">
-                    </div>
+            <div class="field">
+                <div class="control">
+                    <label class="label">@Html.DisplayNameFor(m => m.Title)</label>
+                    <input class="input" asp-for="Title">
+                    <span asp-validation-for="Title" class="error"></span>
                 </div>
+            </div>
             <div class="field">
                 <div class="control">
                     <label class="label" for="">@Html.DisplayNameFor(m => m.Code)</label>
                     <input class="input" asp-for="Code">
+                    <span asp-validation-for="Code" class="error"></span>
                 </div>
             </div>
             <div class="field">
                 <div class="control">
                     <label class="label" for="">@Html.DisplayNameFor(m => m.StartDate)</label>
                     <input class="input" asp-for="StartDate">
+                    <span asp-validation-for="StartDate" class="error"></span>
                 </div>
             </div>
             <div class="field">
                 <div class="control">
                     <label class="label" for="">@Html.DisplayNameFor(m => m.LengthInWeeks)</label>
                     <input class="input" asp-for="LengthInWeeks">
+                    <span asp-validation-for="LengthInWeeks" class="error"></span>
                 </div>
             </div>
             <div class="field">
