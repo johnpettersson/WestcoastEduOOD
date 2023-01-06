@@ -1,8 +1,8 @@
 
 
-namespace WestcoastEdu.Web.Models;
+namespace WestcoastEdu.Web.ViewModels;
 
-public class User
+public class UserEditViewModel
 {
     public int Id { get; set; }
     public string FirstName { get; set; } = "";

@@ -1,5 +1,5 @@
 ﻿
-@model WestcoastEdu.Web.Models.User
+@model WestcoastEdu.Web.ViewModels.UserCreateViewModel
 
 @{
     ViewData["Title"] = "Admin";
@@ -16,30 +16,35 @@
             <div class="control">
                 <label class="label">@Html.DisplayNameFor(model => model.FirstName)</label>
                 <input class="input" asp-for="FirstName">
+                <span class="error" asp-validation-for="FirstName"></span>
             </div>
         </div>
         <div class="field">
             <div class="control">
                 <label class="label">@Html.DisplayNameFor(model => model.LastName)</label>
                 <input class="input" asp-for="LastName">
+                <span class="error" asp-validation-for="LastName"></span>
             </div>
         </div>
         <div class="field">
             <div class="control">
                 <label class="label">@Html.DisplayNameFor(model => model.Email)</label>
                 <input class="input" asp-for="Email">
+                <span class="error" asp-validation-for="Email"></span>
             </div>
         </div>
         <div class="field">
             <div class="control">
                 <label class="label">@Html.DisplayNameFor(model => model.PhoneNumber)</label>
                 <input class="input" asp-for="PhoneNumber">
+                <span class="error" asp-validation-for="PhoneNumber"></span>
             </div>
         </div>
         <div class="field">
             <div class="control">
                 <label class="label">@Html.DisplayNameFor(model => model.IsTeacher)</label>
                 <input class="input" asp-for="IsTeacher">
+                <span class="error" asp-validation-for="IsTeacher"></span>
             </div>
         </div>
         <div class="field">
