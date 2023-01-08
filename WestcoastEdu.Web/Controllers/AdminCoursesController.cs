@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WestcoastEdu.Web.Models;
 using WestcoastEdu.Web.Data;
 using WestcoastEdu.Web.ViewModels;
+using WestcoastEdu.Web.Interface;
 
 namespace WestcoastEdu.Web.Controllers;
 
@@ -10,16 +11,16 @@ namespace WestcoastEdu.Web.Controllers;
 [Route("admin/courses/[action]")]
 public class AdminCoursesController : Controller
 {
-    private readonly WestcoastEduDBContext context;
+    private readonly ICourseRepository repo;
 
-    public AdminCoursesController(WestcoastEduDBContext context)
+    public AdminCoursesController(ICourseRepository repo)
     {
-        this.context = context;
+        this.repo = repo;
     }
 
     public async Task<IActionResult> List() 
     {
-        var courses = await context.Courses.ToListAsync();
+        var courses = await repo.ListAllAsync();
         return View("Index", courses);
     }
 
@@ -48,15 +49,15 @@ public class AdminCoursesController : Controller
             LengthInWeeks = viewModel.LengthInWeeks
         };
 
-        await context.Courses.AddAsync(course);
-        await context.SaveChangesAsync();
+        await repo.AddAsync(course);
+        await repo.SaveAsync();
 
         return RedirectToAction(nameof(this.List));
     }
 
     public async Task<IActionResult> Edit(int id) 
     {
-        var course = await context.Courses.FirstOrDefaultAsync(course => course.Id == id);
+        var course = await repo.FindByIdAsync(id);
 
         if(course is null)
             return NotFound();
@@ -80,7 +81,7 @@ public class AdminCoursesController : Controller
         if(!ModelState.IsValid)
             return View("Edit", viewModel);
 
-        var course = await context.Courses.FirstOrDefaultAsync(course => course.Id == id);
+        var course = await repo.FindByIdAsync(id);
 
         if(course is null)
             return NotFound();
@@ -91,15 +92,15 @@ public class AdminCoursesController : Controller
         course.StartDate = viewModel.StartDate;
         course.LengthInWeeks = viewModel.LengthInWeeks;
 
-        context.Courses.Update(course);
-        await context.SaveChangesAsync();
+        await repo.UpdateAsync(course);
+        await repo.SaveAsync();
 
         return RedirectToAction(nameof(this.List));
     }
 
     public async Task<IActionResult> Delete(int id) 
     {
-        var course = await context.Courses.FirstOrDefaultAsync(course => course.Id == id);
+        var course = await repo.FindByIdAsync(id);
 
         if(course is null)
             return NotFound();
@@ -110,12 +111,13 @@ public class AdminCoursesController : Controller
     [HttpPost, ActionName("delete"), ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var course = await context.Courses.FirstOrDefaultAsync(course => course.Id == id);
+        var course = await repo.FindByIdAsync(id);
+
         if(course is null)
             return NotFound();
 
-        context.Courses.Remove(course);
-        await context.SaveChangesAsync();
+        await repo.DeleteAsync(course);
+        await repo.SaveAsync();
         return RedirectToAction(nameof(this.List));
     }
 }

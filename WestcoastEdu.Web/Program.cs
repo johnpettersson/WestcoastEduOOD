@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using WestcoastEdu.Web.Data;
+using WestcoastEdu.Web.Interface;
+using WestcoastEdu.Web.Models;
+using WestcoastEdu.Web.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<WestcoastEduDBContext>(options => {
     options.UseSqlite(builder.Configuration.GetConnectionString("sqlite"));
 });
+
+//add dependency injection
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
