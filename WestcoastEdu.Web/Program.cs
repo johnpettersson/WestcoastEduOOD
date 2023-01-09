@@ -17,6 +17,8 @@ builder.Services.AddDbContext<WestcoastEduDBContext>(options => {
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 var app = builder.Build();
 
 //Seed database with dummy from json

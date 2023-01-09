@@ -10,16 +10,16 @@ namespace WestcoastEdu.Web.Controllers;
 [Route("admin/users/[action]")]
 public class AdminUsersController : Controller
 {
-    private readonly IUserRepository repo;
+    private readonly IUnitOfWork unitOfWork;
 
-    public AdminUsersController(IUserRepository repo)
+    public AdminUsersController(IUnitOfWork unitOfWork)
     {
-        this.repo = repo;
+        this.unitOfWork = unitOfWork;
     }
 
     public async Task<IActionResult> List() 
     {
-        var users = await repo.ListAllAsync();
+        var users = await unitOfWork.UserRepository.ListAllAsync();
         
         return View("Index", users);
     }
@@ -45,15 +45,16 @@ public class AdminUsersController : Controller
             IsTeacher = viewModel.IsTeacher
         };
 
-        await repo.AddAsync(user);
-        await repo.SaveAsync();
+        await unitOfWork.UserRepository.AddAsync(user);
+        await unitOfWork.Complete();
+
 
         return RedirectToAction(nameof(this.List));
     }
 
     public async Task<IActionResult> Edit(int id) 
     {
-        var user = await repo.FindByIdAsync(id);
+        var user = await unitOfWork.UserRepository.FindByIdAsync(id);
 
         if(user is null)
             return NotFound();
@@ -77,7 +78,7 @@ public class AdminUsersController : Controller
         if(!ModelState.IsValid)
             return View("New", viewModel);
 
-        var userToUpdate = await repo.FindByIdAsync(id);
+        var userToUpdate = await unitOfWork.UserRepository.FindByIdAsync(id);
 
         if(userToUpdate is null)
             return NotFound();
@@ -88,14 +89,15 @@ public class AdminUsersController : Controller
         userToUpdate.PhoneNumber = viewModel.PhoneNumber;
         userToUpdate.IsTeacher = viewModel.IsTeacher;
 
-        await repo.UpdateAsync(userToUpdate);
-        await repo.SaveAsync();
+        await unitOfWork.UserRepository.UpdateAsync(userToUpdate);
+        await unitOfWork.Complete();
+
         return RedirectToAction(nameof(this.List));
     }
 
     public async Task<IActionResult> Delete(int id) 
     {
-        var user = await repo.FindByIdAsync(id);
+        var user = await unitOfWork.UserRepository.FindByIdAsync(id);
 
         if(user is null)
             return NotFound();
@@ -106,14 +108,14 @@ public class AdminUsersController : Controller
     [HttpPost, ActionName("delete"), ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var user = await repo.FindByIdAsync(id);
+        var user = await unitOfWork.UserRepository.FindByIdAsync(id);
 
         
         if(user is null)
             return Content("Det är tyvärr så att det blev lite fel här.");
             
-        await repo.DeleteAsync(user);
-        await repo.SaveAsync();
+        await unitOfWork.UserRepository.DeleteAsync(user);
+        await unitOfWork.Complete();
         return RedirectToAction(nameof(this.List));
     }
 }

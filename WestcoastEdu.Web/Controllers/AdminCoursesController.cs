@@ -11,16 +11,16 @@ namespace WestcoastEdu.Web.Controllers;
 [Route("admin/courses/[action]")]
 public class AdminCoursesController : Controller
 {
-    private readonly ICourseRepository repo;
+    private readonly IUnitOfWork unitOfWork;
 
-    public AdminCoursesController(ICourseRepository repo)
+    public AdminCoursesController(IUnitOfWork unitOfWork)
     {
-        this.repo = repo;
+        this.unitOfWork = unitOfWork;
     }
 
     public async Task<IActionResult> List() 
     {
-        var courses = await repo.ListAllAsync();
+        var courses = await unitOfWork.CourseRepository.ListAllAsync();
         return View("Index", courses);
     }
 
@@ -49,15 +49,15 @@ public class AdminCoursesController : Controller
             LengthInWeeks = viewModel.LengthInWeeks
         };
 
-        await repo.AddAsync(course);
-        await repo.SaveAsync();
+        await unitOfWork.CourseRepository.AddAsync(course);
+        await unitOfWork.Complete();
 
         return RedirectToAction(nameof(this.List));
     }
 
     public async Task<IActionResult> Edit(int id) 
     {
-        var course = await repo.FindByIdAsync(id);
+        var course = await unitOfWork.CourseRepository.FindByIdAsync(id);
 
         if(course is null)
             return NotFound();
@@ -81,7 +81,7 @@ public class AdminCoursesController : Controller
         if(!ModelState.IsValid)
             return View("Edit", viewModel);
 
-        var course = await repo.FindByIdAsync(id);
+        var course = await unitOfWork.CourseRepository.FindByIdAsync(id);
 
         if(course is null)
             return NotFound();
@@ -92,15 +92,16 @@ public class AdminCoursesController : Controller
         course.StartDate = viewModel.StartDate;
         course.LengthInWeeks = viewModel.LengthInWeeks;
 
-        await repo.UpdateAsync(course);
-        await repo.SaveAsync();
+        await unitOfWork.CourseRepository.UpdateAsync(course);
+        await unitOfWork.Complete();
+
 
         return RedirectToAction(nameof(this.List));
     }
 
     public async Task<IActionResult> Delete(int id) 
     {
-        var course = await repo.FindByIdAsync(id);
+        var course = await unitOfWork.CourseRepository.FindByIdAsync(id);
 
         if(course is null)
             return NotFound();
@@ -111,13 +112,14 @@ public class AdminCoursesController : Controller
     [HttpPost, ActionName("delete"), ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var course = await repo.FindByIdAsync(id);
+        var course = await unitOfWork.CourseRepository.FindByIdAsync(id);
 
         if(course is null)
             return NotFound();
 
-        await repo.DeleteAsync(course);
-        await repo.SaveAsync();
+        await unitOfWork.CourseRepository.DeleteAsync(course);
+        await unitOfWork.Complete();
+
         return RedirectToAction(nameof(this.List));
     }
 }
