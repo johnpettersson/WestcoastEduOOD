@@ -1,29 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WestcoastEdu.Web.Models;
 using WestcoastEdu.Web.Data;
+using WestcoastEdu.Web.Interface;
 
 namespace WestcoastEdu.Web.Controllers;
 
 public class CourseController : Controller
 {
-    private readonly WestcoastEduDBContext context;
+    private readonly IUnitOfWork unitOfWork;
 
-    public CourseController(WestcoastEduDBContext context)
+    public CourseController(IUnitOfWork unitOfWork)
     {
-        this.context = context;
+        this.unitOfWork = unitOfWork;
     }
 
     public async Task<IActionResult> ListAsync()
     {
-        List<Course> courses = await context.Courses.ToListAsync();
+        var courses = await unitOfWork.CourseRepository.ListAllAsync();
 
         return View(courses);
     }
 
     public async Task<IActionResult> Show(int id) 
     {
-        Course? course = await context.Courses.FirstOrDefaultAsync(c => c.Id == id);
+        Course? course = await unitOfWork.CourseRepository.FindByIdAsync(id);
 
         if(course is null)
             return NotFound();
