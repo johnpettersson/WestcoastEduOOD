@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WestcoastEdu.Web.Data;
 using WestcoastEdu.Web.Interface;
 using WestcoastEdu.Web.Models;
 using WestcoastEdu.Web.ViewModels;
