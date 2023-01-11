@@ -1,0 +1,47 @@
+
+@model WestcoastEdu.Web.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Registrera konto";
+}
+
+<div class="container">
+
+    <h1 class="title">Westcoast Education Admin</h1>
+    <h2 class="subtitle">Skapa ny användare: </h2>
+
+    <form asp-action="register">
+        <div class="field">
+            <div class="control">
+                <label class="label" asp-for="Email">@Html.DisplayNameFor(model => model.Email)</label>
+                <input class="input" asp-for="Email">
+                <span class="error" asp-validation-for="Email"></span>
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <label class="label">@Html.DisplayNameFor(model => model.Password)</label>
+                <input class="input" asp-for="Password">
+                <span class="error" asp-validation-for="Password"></span>
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <label class="label">@Html.DisplayNameFor(model => model.ConfirmPassword)</label>
+                <input class="input" asp-for="ConfirmPassword">
+                <span class="error" asp-validation-for="ConfirmPassword"></span>
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <input type="submit" class="button is-success" value="Registrera" />
+            </div>
+        </div>
+
+        @Html.ValidationSummary(false)
+    </form>
+
+</div>
+
+
+    

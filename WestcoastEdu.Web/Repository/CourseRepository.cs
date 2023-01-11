@@ -16,6 +16,6 @@ public class CourseRepository : Repository<Course>, ICourseRepository
 
     public async Task<Course?> FindByCourseNameAsync(string name)
     {
-        return await context.Courses.SingleOrDefaultAsync(course => course.Name == name);
+        return await set.SingleOrDefaultAsync(course => course.Name == name);
     }
 }

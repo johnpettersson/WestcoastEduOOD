@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using WestcoastEdu.Web.Models;
 using WestcoastEdu.Web.Interface;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WestcoastEdu.Web.Controllers;
 
+[Authorize()]
 public class CourseController : Controller
 {
     private readonly IUnitOfWork unitOfWork;

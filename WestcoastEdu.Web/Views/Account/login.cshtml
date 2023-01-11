@@ -1,0 +1,37 @@
+
+@model WestcoastEdu.Web.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Logga in";
+}
+
+<div class="container">
+
+    <h1 class="title">Logga in</h1>
+
+    <form asp-action="login" asp-route-returnUrl=@ViewBag.returnUrl>
+        <div class="field">
+            <div class="control">
+                <label class="label" asp-for="Username">@Html.DisplayNameFor(model => model.Username)</label>
+                <input class="input" asp-for="Username">
+                <span class="error" asp-validation-for="Username"></span>
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <label class="label">@Html.DisplayNameFor(model => model.Password)</label>
+                <input class="input" asp-for="Password">
+                <span class="error" asp-validation-for="Password"></span>
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <input type="submit" class="button is-success" value="Logga in" />
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+    

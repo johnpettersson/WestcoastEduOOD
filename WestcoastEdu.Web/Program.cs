@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WestcoastEdu.Web.Data;
 using WestcoastEdu.Web.Interface;
@@ -9,8 +10,24 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+
+//our database context
 builder.Services.AddDbContext<WestcoastEduDBContext>(options => {
     options.UseSqlite(builder.Configuration.GetConnectionString("sqlite"));
+});
+
+//identity database context & cookies
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => {
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 4;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.User.RequireUniqueEmail = true;
+}).AddEntityFrameworkStores<WestcoastEduDBContext>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/account/login";
 });
 
 //add dependency injection

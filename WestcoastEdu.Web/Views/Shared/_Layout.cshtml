@@ -32,7 +32,16 @@
                     
                     <a asp-action="Index" asp-controller="Home" class="navbar-item">Start</a>
 
-                    <a asp-controller="course" asp-action="list" class="navbar-item">Kurskatalog</a>
+
+
+                    @if(User.Identity is null || !User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="account" asp-action="login" class="navbar-item">Logga in</a>
+                    } else {
+                        <a asp-controller="course" asp-action="list" class="navbar-item">Kurskatalog</a>
+                        <a asp-controller="account" asp-action="logout" class="navbar-item">Logga ut</a>
+                    }
+                        
 
                 </div>
             </div>

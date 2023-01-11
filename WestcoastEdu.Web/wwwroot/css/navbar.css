@@ -20,6 +20,8 @@
     text-decoration: none;
     padding: 16px;
 }
+
+.navbar a.navbar-item,
 .navbar a.navbar-item:visited {
     text-decoration: none;
     color: inherit;
