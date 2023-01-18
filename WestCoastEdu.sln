@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WestcoastEdu.Tests", "Westc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WestcoastEdu.Web", "WestcoastEdu.Web\WestcoastEdu.Web.csproj", "{A75C6994-F260-4600-B38A-7510A3B5F99E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WestCoastEdu.Api", "WestCoastEdu.Api\WestCoastEdu.Api.csproj", "{CE8864B8-ED60-4B17-AF6E-EC5FE7C1B2ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{A75C6994-F260-4600-B38A-7510A3B5F99E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A75C6994-F260-4600-B38A-7510A3B5F99E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A75C6994-F260-4600-B38A-7510A3B5F99E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE8864B8-ED60-4B17-AF6E-EC5FE7C1B2ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE8864B8-ED60-4B17-AF6E-EC5FE7C1B2ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE8864B8-ED60-4B17-AF6E-EC5FE7C1B2ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE8864B8-ED60-4B17-AF6E-EC5FE7C1B2ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
