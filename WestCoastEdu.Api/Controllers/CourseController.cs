@@ -6,10 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace WestcoastEdu.Api.Controllers;
 
 [ApiController]
-[Route("api/v1/[Controller]")]
+[Route("api/v1/course")]
 public class CourseController : ControllerBase
 {
-
     [HttpGet("list")]
     public ActionResult List()
     {
@@ -49,7 +48,7 @@ public class CourseController : ControllerBase
     public ActionResult CreateCourse(object model)
     {
         //TODO: Skapa en kurs och spara den 
-        return Created("uri123", new { message = "CreateCourse fungerar"});
+        return Created("url_to_created_resource", new { message = "CreateCourse fungerar", model});
     }
 
     [HttpPut("{id}")]
@@ -73,5 +72,4 @@ public class CourseController : ControllerBase
         //TODO: Updatera kursens isCompleted-fält 
         return NoContent();
     }
-
 }
