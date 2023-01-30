@@ -1,6 +1,8 @@
 
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WestcoastEdu.Api.Data;
 
 namespace WestcoastEdu.Api.Controllers;
 
@@ -8,18 +10,29 @@ namespace WestcoastEdu.Api.Controllers;
 [Route("api/v1/student")]
 public class StudentController : ControllerBase
 {
-    [HttpGet("list")]
-    public ActionResult List()
+    private readonly WestcoastEduContext _context;
+
+    public StudentController(WestcoastEduContext context)
     {
-        //TODO: Hämta alla studenter
-        return StatusCode(200, new { message = "List fungerar" });
+        _context = context;
+    }
+
+    [HttpGet("list")]
+    public async Task<ActionResult> List()
+    {
+        var result = await _context.Students.ToListAsync();
+        return Ok(result);
     }
 
     [HttpGet("{id}")]
-    public ActionResult GetById(int id)
+    public async Task<ActionResult> GetById(int id)
     {
-        //TODO: HÄmta student som matchar idt
-        return StatusCode(200, new { message = "GetById fungerar", id });
+        var result = await _context.Students.FindAsync(id);
+
+        if(result is null)
+            return NotFound();
+            
+        return Ok(result);
     }
 
     [HttpGet("email/{email}")]
