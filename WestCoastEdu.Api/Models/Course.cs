@@ -2,6 +2,7 @@
 
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WestcoastEdu.Api.Models;
 
@@ -15,4 +16,10 @@ public class Course
     public bool FullyBooked { get; set; }
     public bool Completed { get; set; }
 
+    public int TeacherId { get; set; }
+
+    [ForeignKey("TeacherId")]
+    public Teacher? Teacher { get; set; }
+
+    public ICollection<Student>? Students { get; set; }
 }

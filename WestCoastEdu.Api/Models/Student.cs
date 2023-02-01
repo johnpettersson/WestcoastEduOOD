@@ -1,6 +1,7 @@
 
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WestcoastEdu.Api.Models;
 
@@ -12,4 +13,9 @@ public class Student
     public string FirstName { get; set; } = "";
     public string LastName { get; set; } = "";
     public string Email { get; set; } = "";
+
+    public int CourseId { get; set; }
+
+    [ForeignKey("CourseId")]
+    public Course Course { get; set; }
 }

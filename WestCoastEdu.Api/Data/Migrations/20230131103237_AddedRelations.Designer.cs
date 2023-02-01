@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WestcoastEdu.Api.Data;
 
@@ -10,9 +11,11 @@ using WestcoastEdu.Api.Data;
 namespace WestCoastEdu.Api.Data.Migrations
 {
     [DbContext(typeof(WestcoastEduContext))]
-    partial class WestcoasEduContextModelSnapshot : ModelSnapshot
+    [Migration("20230131103237_AddedRelations")]
+    partial class AddedRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
@@ -35,15 +38,10 @@ namespace WestCoastEdu.Api.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("TeacherId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TeacherId");
 
                     b.ToTable("Courses");
                 });
@@ -80,30 +78,13 @@ namespace WestCoastEdu.Api.Data.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("WestcoastEdu.Api.Models.Subject", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TeacherId");
-
-                    b.ToTable("Subjects");
-                });
-
             modelBuilder.Entity("WestcoastEdu.Api.Models.Teacher", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CourseId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
@@ -120,18 +101,9 @@ namespace WestCoastEdu.Api.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
                     b.ToTable("Teachers");
-                });
-
-            modelBuilder.Entity("WestcoastEdu.Api.Models.Course", b =>
-                {
-                    b.HasOne("WestcoastEdu.Api.Models.Teacher", "Teacher")
-                        .WithMany("Courses")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("WestcoastEdu.Api.Models.Student", b =>
@@ -145,23 +117,22 @@ namespace WestCoastEdu.Api.Data.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("WestcoastEdu.Api.Models.Subject", b =>
+            modelBuilder.Entity("WestcoastEdu.Api.Models.Teacher", b =>
                 {
-                    b.HasOne("WestcoastEdu.Api.Models.Teacher", null)
-                        .WithMany("Subjects")
-                        .HasForeignKey("TeacherId");
+                    b.HasOne("WestcoastEdu.Api.Models.Course", "Course")
+                        .WithMany("Teachers")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("WestcoastEdu.Api.Models.Course", b =>
                 {
                     b.Navigation("Students");
-                });
 
-            modelBuilder.Entity("WestcoastEdu.Api.Models.Teacher", b =>
-                {
-                    b.Navigation("Courses");
-
-                    b.Navigation("Subjects");
+                    b.Navigation("Teachers");
                 });
 #pragma warning restore 612, 618
         }

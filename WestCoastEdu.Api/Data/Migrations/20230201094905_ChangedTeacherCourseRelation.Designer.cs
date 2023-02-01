@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WestcoastEdu.Api.Data;
 
@@ -10,9 +11,11 @@ using WestcoastEdu.Api.Data;
 namespace WestCoastEdu.Api.Data.Migrations
 {
     [DbContext(typeof(WestcoastEduContext))]
-    partial class WestcoasEduContextModelSnapshot : ModelSnapshot
+    [Migration("20230201094905_ChangedTeacherCourseRelation")]
+    partial class ChangedTeacherCourseRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
@@ -80,26 +83,6 @@ namespace WestCoastEdu.Api.Data.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("WestcoastEdu.Api.Models.Subject", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TeacherId");
-
-                    b.ToTable("Subjects");
-                });
-
             modelBuilder.Entity("WestcoastEdu.Api.Models.Teacher", b =>
                 {
                     b.Property<int>("Id")
@@ -145,13 +128,6 @@ namespace WestCoastEdu.Api.Data.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("WestcoastEdu.Api.Models.Subject", b =>
-                {
-                    b.HasOne("WestcoastEdu.Api.Models.Teacher", null)
-                        .WithMany("Subjects")
-                        .HasForeignKey("TeacherId");
-                });
-
             modelBuilder.Entity("WestcoastEdu.Api.Models.Course", b =>
                 {
                     b.Navigation("Students");
@@ -160,8 +136,6 @@ namespace WestCoastEdu.Api.Data.Migrations
             modelBuilder.Entity("WestcoastEdu.Api.Models.Teacher", b =>
                 {
                     b.Navigation("Courses");
-
-                    b.Navigation("Subjects");
                 });
 #pragma warning restore 612, 618
         }
