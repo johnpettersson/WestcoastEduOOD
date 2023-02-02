@@ -4,6 +4,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WestcoastEdu.Api.Data;
+using WestcoastEdu.Api.Models;
 using WestcoastEdu.Api.ViewModels;
 
 namespace WestcoastEdu.Api.Controllers;
@@ -119,10 +120,30 @@ public class CourseController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult CreateCourse(object model)
+    public async Task<ActionResult> CreateCourseAsync(CourseAddViewModel model)
     {
-        //TODO: Skapa en kurs och spara den 
-        return Created("url_to_created_resource", new { message = "CreateCourse fungerar", model});
+        if(!ModelState.IsValid)
+            return BadRequest("Info saknas");
+
+        var exists = await _context.Courses.SingleOrDefaultAsync(c => c.Title == model.Title);
+
+        if(exists is not null)
+            return BadRequest($"Det finns redan en kurs med titeln {model.Title}");
+
+
+        var course = new Course
+        {
+            Title = model.Title,
+            Number = model.Number,
+            StartDate = model.StartDate ?? DateTime.MinValue
+        };
+
+        await _context.Courses.AddAsync(course);
+
+        if(await _context.SaveChangesAsync() > 0) 
+            return Created(nameof(GetByIdAsync), new { id = course.Id });
+
+        return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
     }
 
     [HttpPut("{id}")]

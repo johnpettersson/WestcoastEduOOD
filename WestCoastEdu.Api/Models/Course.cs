@@ -16,7 +16,7 @@ public class Course
     public bool FullyBooked { get; set; }
     public bool Completed { get; set; }
 
-    public int TeacherId { get; set; }
+    public int? TeacherId { get; set; }
 
     [ForeignKey("TeacherId")]
     public Teacher? Teacher { get; set; }

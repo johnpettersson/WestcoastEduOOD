@@ -113,9 +113,24 @@ public class StudentController : ControllerBase
 
 
     [HttpPatch("{studentId}/courses/add/{courseId}")]
-    public ActionResult AddCourse(int courseId, int studentId)
+    public async Task<ActionResult> AddCourseAsync(int courseId, int studentId)
     {
-        //TODO: Lägg till kursen på studentens kurser 
-        return NoContent();
+        var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId);
+
+        if(course is null)
+            return NotFound();
+
+        var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == studentId);
+
+        if(student is null)
+            return NotFound();
+
+
+        student.Course = course;
+
+        if(await _context.SaveChangesAsync() > 0)
+            return NoContent();
+
+        return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
     }
 }
