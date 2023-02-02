@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WestcoastEdu.Api.Data;
+using WestcoastEdu.Api.ViewModels;
 
 namespace WestcoastEdu.Api.Controllers;
 
@@ -20,33 +21,73 @@ public class StudentController : ControllerBase
     [HttpGet("list")]
     public async Task<ActionResult> List()
     {
-        var result = await _context.Students.ToListAsync();
+        var result = await _context.Students
+        .Select(s => new StudentListViewModel {
+            Id = s.Id,
+            FirstName = s.FirstName,
+            LastName = s.LastName,
+        }).ToListAsync();
         return Ok(result);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult> GetById(int id)
     {
-        var result = await _context.Students.FindAsync(id);
+        var result = await _context.Students
+        .Include(student => student.Course)
+        .Select(student => new StudentDetailedViewModel {
+            Id = student.Id,
+            FirstName = student.FirstName,
+            LastName = student.LastName,
+            Email = student.Email,
+            PersonNumber = student.PersonNumber,
+            CourseName = student.Course.Title ?? ""
+        }).SingleOrDefaultAsync(student => student.Id == id);
 
         if(result is null)
             return NotFound();
-            
+
         return Ok(result);
     }
 
     [HttpGet("email/{email}")]
-    public ActionResult GetByEmail(string email)
+    public async Task<ActionResult> GetByEmailAsync(string email)
     {
-        //TODO: HÄmta student som matchar idt
-        return StatusCode(200, new { message = "GetByEmail fungerar", email });
+        var result = await _context.Students
+        .Include(student => student.Course)
+        .Select(student => new StudentDetailedViewModel {
+            Id = student.Id,
+            FirstName = student.FirstName,
+            LastName = student.LastName,
+            Email = student.Email,
+            PersonNumber = student.PersonNumber,
+            CourseName = student.Course.Title ?? ""
+        }).SingleOrDefaultAsync(student => student.Email == email);
+
+        if(result is null)
+            return NotFound();
+
+        return Ok(result);
     }
 
     [HttpGet("personnumber/{personNumber}")]
-    public ActionResult GetByPersonNumber(string personNumber)
+    public async Task<ActionResult> GetByPersonNumberAsync(string personNumber)
     {
-        //TODO: HÄmta student som matchar idt
-        return StatusCode(200, new { message = "GetByPersonNumber fungerar", personNumber });
+        var result = await _context.Students
+        .Include(student => student.Course)
+        .Select(student => new StudentDetailedViewModel {
+            Id = student.Id,
+            FirstName = student.FirstName,
+            LastName = student.LastName,
+            Email = student.Email,
+            PersonNumber = student.PersonNumber,
+            CourseName = student.Course.Title ?? ""
+        }).SingleOrDefaultAsync(student => student.PersonNumber == personNumber);
+
+        if(result is null)
+            return NotFound();
+
+        return Ok(result);
     }
 
     [HttpPost]

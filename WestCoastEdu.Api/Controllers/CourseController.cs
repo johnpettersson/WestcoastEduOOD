@@ -2,6 +2,9 @@
 
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WestcoastEdu.Api.Data;
+using WestcoastEdu.Api.ViewModels;
 
 namespace WestcoastEdu.Api.Controllers;
 
@@ -9,39 +12,110 @@ namespace WestcoastEdu.Api.Controllers;
 [Route("api/v1/course")]
 public class CourseController : ControllerBase
 {
-    [HttpGet("list")]
-    public ActionResult List()
+    private readonly WestcoastEduContext _context;
+
+    public CourseController(WestcoastEduContext context)
     {
-        //TODO: Hämta alla kurser
-        return StatusCode(200, new { message = "Hello World!" });
+        _context = context;
+    }
+
+    [HttpGet("list")]
+    public async Task<ActionResult> ListAsync()
+    {
+        var result = await _context.Courses
+        .Select(c => new CourseListViewModel{
+            Id = c.Id,
+            Title = c.Title ?? ""
+        }).ToListAsync();
+
+        return Ok(result);
     }
 
     [HttpGet("{id}")]
-    public ActionResult GetById(int id)
+    public async Task<ActionResult> GetByIdAsync(int id)
     {
-        //TODO: HÄmta kursen som matchar idt
-        return StatusCode(200, new { message = "GetById fungerar", id});
+        var result = await _context.Courses
+        .Include(c => c.Students)
+        .Include(c => c.Teacher)
+        .Select(c => new CourseDetailedViewModel
+        {
+            Id = c.Id,
+            Completed = c.Completed,
+            FullyBooked = c.FullyBooked,
+            StartDate = c.StartDate,
+            Title = c.Title ?? "",
+            Number = c.Number,
+            Students = c.Students.Select(student => new StudentListViewModel{
+                Id = student.Id,
+                FirstName = student.FirstName,
+                LastName = student.LastName,
+            }).ToList()
+        }).FirstOrDefaultAsync(c => c.Id == id);
+
+        if(result is null)
+            return NotFound();
+
+        return Ok(result);
     }
 
     [HttpGet("number/{courseNumber}")]
-    public ActionResult GetByCourseNumber(string courseNumber)
+    public async Task<ActionResult> GetByCourseNumberAsync(string courseNumber)
     {
-        //TODO: Hämta kursen som matchar kursnumret.
-        return StatusCode(200, new { message = "GetByCourseNumber fungerar", courseNumber});
+        var result = await _context.Courses
+        .Include(c => c.Students)
+        .Include(c => c.Teacher)
+        .Select(c => new CourseDetailedViewModel
+        {
+            
+            Id = c.Id,
+            Completed = c.Completed,
+            FullyBooked = c.FullyBooked,
+            StartDate = c.StartDate,
+            Title = c.Title ?? "",
+            Number = c.Number
+        }).FirstOrDefaultAsync(c => c.Number == courseNumber);
+
+        if(result is null)
+            return NotFound();
+
+        return Ok(result);
     }   
 
     [HttpGet("title/{title}")]
-    public ActionResult GetByCourseTitle(string title)
+    public async Task<ActionResult> GetByCourseTitleAsync(string title)
     {
-        //TODO: Hämta kursen som matchar titeln 
-        return StatusCode(200, new { message = "GetByCourseTitle fungerar", title});
+        var result = await _context.Courses
+        .Include(c => c.Students)
+        .Include(c => c.Teacher)
+        .Select(c => new CourseDetailedViewModel
+        {
+            
+            Id = c.Id,
+            Completed = c.Completed,
+            FullyBooked = c.FullyBooked,
+            StartDate = c.StartDate,
+            Title = c.Title ?? "",
+            Number = c.Number
+        }).FirstOrDefaultAsync(c => c.Title == title);
+
+        if(result is null)
+            return NotFound();
+
+        return Ok(result);
     }
 
     [HttpGet("startdate/{date}")]
-    public ActionResult GetByStartDate(DateTime date)
+    public async Task<ActionResult> GetByStartDateAsync(DateTime date)
     {
-        //TODO: Hämta kurser som matchar datumet 
-        return StatusCode(200, new { message = "GetByStartDate fungerar", date});
+        //TODO: DEBUGGA DETTA
+        var result = await _context.Courses
+        .Where(c => c.StartDate.Date == date)
+        .Select(c => new CourseListViewModel{
+            Id = c.Id,
+            Title = c.Title ?? ""
+        }).ToListAsync();
+
+        return Ok(result);
     }
 
     [HttpPost]

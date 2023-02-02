@@ -1,6 +1,9 @@
 
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WestcoastEdu.Api.Data;
+using WestcoastEdu.Api.ViewModels;
 
 namespace WestcoastEdu.Api.Controllers;
 
@@ -8,25 +11,81 @@ namespace WestcoastEdu.Api.Controllers;
 [Route("api/v1/teacher")]
 public class TeacherController : ControllerBase
 {
-    [HttpGet("list")]
-    public ActionResult List()
+    private readonly WestcoastEduContext _context;
+
+    public TeacherController(WestcoastEduContext context)
     {
-        //TODO: Hämta alla lärare
-        return StatusCode(200, new { message = "List fungerar" });
+        _context = context;
+    }
+
+    [HttpGet("list")]
+    public async Task<ActionResult> ListAsync()
+    {
+        var result = await _context.Teachers.Select(teacher => new TeacherListViewModel
+        {
+            Id = teacher.Id,
+            Email = teacher.Email,
+            FirstName = teacher.FirstName,
+            LastName = teacher.LastName,
+        }).ToListAsync();
+
+        return Ok(result);
     }
 
     [HttpGet("{id}")]
-    public ActionResult GetById(int id)
+    public async Task<ActionResult> GetByIdAsync(int id)
     {
-        //TODO: Hämta läraren som matchar idt
-        return StatusCode(200, new { message = "GetById fungerar", id });
+        var result = await _context.Teachers
+        .Include(t => t.Courses)
+        .Include(t => t.Subjects)
+        .Select(teacher => new TeacherDetailedViewModel
+        {
+            Id = teacher.Id,
+            Email = teacher.Email,
+            FirstName = teacher.FirstName,
+            LastName = teacher.LastName,
+            Courses = teacher.Courses.Select(course => new CourseListViewModel
+            {
+                Id = course.Id,
+                Title = course.Title!,
+            }).ToList(),
+            Subjects = teacher.Subjects
+        }).FirstOrDefaultAsync(teacher => teacher.Id == id);
+
+
+        if(result is null)
+            return NotFound();
+
+
+        return Ok(result);
     }
 
     [HttpGet("email/{email}")]
-    public ActionResult GetByEmail(string email)
+    public async Task<ActionResult> GetByEmailAsync(string email)
     {
-        //TODO: Hämta läraren som matchar emailen
-        return StatusCode(200, new { message = "GetByEmail fungerar", email });
+        var result = await _context.Teachers
+        .Include(t => t.Courses)
+        .Include(t => t.Subjects)
+        .Select(teacher => new TeacherDetailedViewModel
+        {
+            Id = teacher.Id,
+            Email = teacher.Email,
+            FirstName = teacher.FirstName,
+            LastName = teacher.LastName,
+            Courses = teacher.Courses.Select(course => new CourseListViewModel
+            {
+                Id = course.Id,
+                Title = course.Title!,
+            }).ToList(),
+            Subjects = teacher.Subjects
+        }).FirstOrDefaultAsync(teacher => teacher.Email == email);
+
+
+        if(result is null)
+            return NotFound();
+
+
+        return Ok(result);
     }
 
     [HttpPost]
