@@ -203,7 +203,7 @@ public class CourseController : ControllerBase
 
 
     [HttpPatch("{courseId}/teacher/{teacherId}")]
-    public async Task<ActionResult> AddCourseAsync(int courseId, int teacherId)
+    public async Task<ActionResult> SetTeacherAsync(int courseId, int teacherId)
     {
         var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId);
 

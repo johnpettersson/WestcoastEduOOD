@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WestcoastEdu.Api.Data;
+using WestcoastEdu.Api.Models;
 using WestcoastEdu.Api.ViewModels;
 
 namespace WestcoastEdu.Api.Controllers;
@@ -110,10 +111,31 @@ public class TeacherController : ControllerBase
     }
 
 
-    [HttpPatch("{teacherId}/courses/add/{courseId}")]
-    public ActionResult AddCourse(int teacherId, int courseId)
+
+    [HttpPatch("{teacherId}/subjects/add/{subjectName}")]
+    public async Task<ActionResult> AddCourseAsync(int teacherId, string subjectName)
     {
-        //TODO: Lägg till kursen på lärarens kurser 
-        return NoContent();
+
+
+        var teacher = await _context.Teachers.FirstOrDefaultAsync(s => s.Id == teacherId);
+
+        if (teacher is null)
+            return NotFound();
+
+        var subject = new Subject { Name = subjectName ?? "" };
+
+        _context.Subjects.Add(subject);
+
+        if(teacher.Subjects is null)
+            teacher.Subjects = new List<Subject>();
+
+        teacher.Subjects.Add(subject);
+
+        _context.Teachers.Update(teacher);
+
+        if(await _context.SaveChangesAsync() > 0)
+            return NoContent();
+
+        return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
     }
 }
