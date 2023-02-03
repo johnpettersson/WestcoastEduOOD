@@ -108,7 +108,6 @@ public class CourseController : ControllerBase
     [HttpGet("startdate/{date}")]
     public async Task<ActionResult> GetByStartDateAsync(DateTime date)
     {
-        //TODO: DEBUGGA DETTA
         var result = await _context.Courses
         .Where(c => c.StartDate.Date == date)
         .Select(c => new CourseListViewModel{
@@ -200,5 +199,30 @@ public class CourseController : ControllerBase
     {
         //TODO: Updatera kursens isCompleted-fält 
         return NoContent();
+    }
+
+
+    [HttpPatch("{courseId}/teacher/{teacherId}")]
+    public async Task<ActionResult> AddCourseAsync(int courseId, int teacherId)
+    {
+        var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId);
+
+        if(course is null)
+            return NotFound();
+
+        var teacher = await _context.Teachers.FirstOrDefaultAsync(s => s.Id == teacherId);
+
+        if(teacher is null)
+            return NotFound();
+
+
+        course.Teacher = teacher;
+
+        _context.Courses.Update(course);
+
+        if(await _context.SaveChangesAsync() > 0)
+            return NoContent();
+
+        return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
     }
 }
