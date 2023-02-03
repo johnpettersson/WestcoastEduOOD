@@ -147,17 +147,51 @@ public class CourseController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public ActionResult UpdateCourse(int id, object model)
+    public async Task<ActionResult> UpdateCourseAsync(int id, CourseAddViewModel model)
     {
-        //TODO: Uppdatera kursen 
-        return NoContent();
+        // if(!ModelState.IsValid)
+        //     return BadRequest("Info saknas");
+
+        // var exists = await _context.Courses.SingleOrDefaultAsync(c => c.Id == id);
+
+        // if(exists is null)
+        //     return BadRequest($"Det finns ingen kurs med id: {id}");
+
+
+        // var course = new Course
+        // {
+        //     Title = model.Title,
+        //     Number = model.Number,
+        //     StartDate = model.StartDate ?? DateTime.MinValue
+        // };
+
+        // await _context.Courses.AddAsync(course);
+
+        // if(await _context.SaveChangesAsync() > 0) 
+        //     return Created(nameof(GetByIdAsync), new { id = course.Id });
+
+        return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
     }
 
     [HttpPatch("fullybooked/{courseId}")]
-    public ActionResult MarkCourseFullyBooked(int courseId)
+    public async Task<ActionResult> MarkCourseFullyBookedAsync(int id)
     {
-        //TODO: Updatera kursens isFullyBooked-fält 
-        return NoContent();
+        if(!ModelState.IsValid)
+            return BadRequest("Info saknas");
+
+        var course = await _context.Courses.FindAsync(id);
+
+        if(course is null)
+            return BadRequest($"Det finns ingen kurs med id: {id}");
+
+        course.FullyBooked = true;
+
+        _context.Courses.Update(course);
+
+        if(await _context.SaveChangesAsync() > 0)
+            return NoContent();
+
+        return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
     }
 
 

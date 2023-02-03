@@ -44,7 +44,7 @@ public class TeacherController : ControllerBase
             Email = teacher.Email,
             FirstName = teacher.FirstName,
             LastName = teacher.LastName,
-            Courses = teacher.Courses.Select(course => new CourseListViewModel
+            Courses = teacher.Courses!.Select(course => new CourseListViewModel
             {
                 Id = course.Id,
                 Title = course.Title!,
@@ -72,7 +72,7 @@ public class TeacherController : ControllerBase
             Email = teacher.Email,
             FirstName = teacher.FirstName,
             LastName = teacher.LastName,
-            Courses = teacher.Courses.Select(course => new CourseListViewModel
+            Courses = teacher.Courses!.Select(course => new CourseListViewModel
             {
                 Id = course.Id,
                 Title = course.Title!,

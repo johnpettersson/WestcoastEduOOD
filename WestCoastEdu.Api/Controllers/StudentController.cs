@@ -127,6 +127,8 @@ public class StudentController : ControllerBase
 
 
         student.Course = course;
+        
+        _context.Students.Update(student);
 
         if(await _context.SaveChangesAsync() > 0)
             return NoContent();
