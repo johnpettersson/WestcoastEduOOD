@@ -17,6 +17,7 @@ public class CourseAddViewModel
     public string? Number { get; set; }
 
     [Required(ErrorMessage = "Course startdate is required")]
+    [DataType(DataType.Date)]
     public DateTime? StartDate { get; set; }
 
 }

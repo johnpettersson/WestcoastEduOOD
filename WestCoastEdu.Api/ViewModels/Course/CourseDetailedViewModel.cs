@@ -13,5 +13,9 @@ public class CourseDetailedViewModel
     public bool Completed { get; set; }
     public string? Number { get; set; }
 
+    public int? TeacherId { get; set; }
+    public string? TeacherName { get; set; }
+
+
     public ICollection<StudentListViewModel>? Students { get; set; }
 }

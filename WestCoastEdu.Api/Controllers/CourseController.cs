@@ -33,8 +33,8 @@ public class CourseController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult> GetByIdAsync(int id)
+    [HttpGet("id/{id}")]
+    public async Task<ActionResult> GetById(int id)
     {
         Course? model = await _context.Courses
         .Include(c => c.Students)
@@ -80,7 +80,6 @@ public class CourseController : ControllerBase
         .Include(c => c.Teacher)
         .Select(c => new CourseDetailedViewModel
         {
-
             Id = c.Id,
             Completed = c.Completed,
             FullyBooked = c.FullyBooked,
@@ -123,7 +122,7 @@ public class CourseController : ControllerBase
 
         var course = new Course
         {
-            Title = model.Title!,
+            Title = model.Title!, //! pga modelstate.isvalid
             Number = model.Number!,
             StartDate = model.StartDate ?? DateTime.MinValue
         };
@@ -131,65 +130,77 @@ public class CourseController : ControllerBase
         await _context.Courses.AddAsync(course);
 
         if (await _context.SaveChangesAsync() > 0)
-            return Created(nameof(GetByIdAsync), new { id = course.Id });
+        {
+            var routeValues = new { id = course.Id };
+            return CreatedAtAction(nameof(GetById), routeValues, null); //skickar med null bara för att nå den överlagrade varianten av CreatedAtAction med routevalues... (╯°□°)╯︵ ┻━┻ 
+        }
 
         return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateCourseAsync(int id, CourseAddViewModel model)
+    [HttpPut]
+    public async Task<ActionResult> UpdateCourseAsync(CourseEditViewModel model)
     {
-        // if(!ModelState.IsValid)
-        //     return BadRequest("Info saknas");
-
-        // var exists = await _context.Courses.SingleOrDefaultAsync(c => c.Id == id);
-
-        // if(exists is null)
-        //     return BadRequest($"Det finns ingen kurs med id: {id}");
-
-
-        // var course = new Course
-        // {
-        //     Title = model.Title,
-        //     Number = model.Number,
-        //     StartDate = model.StartDate ?? DateTime.MinValue
-        // };
-
-        // await _context.Courses.AddAsync(course);
-
-        // if(await _context.SaveChangesAsync() > 0) 
-        //     return Created(nameof(GetByIdAsync), new { id = course.Id });
-
-        return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
-    }
-
-    [HttpPatch("fullybooked/{courseId}")]
-    public async Task<ActionResult> MarkCourseFullyBookedAsync(int id)
-    {
-        if (!ModelState.IsValid)
+        if(!ModelState.IsValid)
             return BadRequest("Info saknas");
 
+        Course? course = await _context.Courses.SingleOrDefaultAsync(c => c.Id == model.CourseId);
+
+        if(course is null)
+            return BadRequest($"Det finns ingen kurs med id: {model.CourseId}");
+
+        var exists = await _context.Courses.SingleOrDefaultAsync(c => c.Title == model.Title);
+
+        if (exists is not null)
+            return BadRequest($"Det finns redan en kurs med titeln {model.Title}");
+
+        // borde aldrig bli null pga ModelState.IsValid-check ovan ^
+        course.Title = model.Title!; 
+        course.Number = model.Number!;
+        course.StartDate = model.StartDate ?? DateTime.MinValue;
+
+        _context.Courses.Update(course);
+
+        if(await _context.SaveChangesAsync() > 0)
+            return NoContent();
+
+        return StatusCode(500);
+    }
+
+    [HttpPatch("fullybooked/{id}")]
+    public async Task<ActionResult> ToggleCourseFullyBookedAsync(int id)
+    {
         var course = await _context.Courses.FindAsync(id);
 
         if (course is null)
             return BadRequest($"Det finns ingen kurs med id: {id}");
 
-        course.FullyBooked = true;
+        course.FullyBooked = !course.FullyBooked;
 
         _context.Courses.Update(course);
 
         if (await _context.SaveChangesAsync() > 0)
             return NoContent();
 
-        return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
+        return StatusCode(500);
     }
 
 
-    [HttpPatch("complete/{courseId}")]
-    public ActionResult MarkCourseCompleted(int courseId)
+    [HttpPatch("complete/{id}")]
+    public async Task<ActionResult> ToggleCourseCompletedAsync(int id)
     {
-        //TODO: Updatera kursens isCompleted-fält 
-        return NoContent();
+        var course = await _context.Courses.FindAsync(id);
+
+        if (course is null)
+            return BadRequest($"Det finns ingen kurs med id: {id}");
+
+        course.Completed = !course.Completed;
+        _context.Courses.Update(course);
+
+        if (await _context.SaveChangesAsync() > 0)
+            return NoContent();
+
+        return StatusCode(500);
     }
 
 
@@ -217,9 +228,6 @@ public class CourseController : ControllerBase
         return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
     }
 
-
-
-
     private CourseDetailedViewModel CreateCourseDetailedViewModel(Course model)
     {
         var viewModel =  new CourseDetailedViewModel
@@ -240,6 +248,12 @@ public class CourseController : ControllerBase
                 FirstName = student.FirstName,
                 LastName = student.LastName
             }).ToList();
+        }
+
+        if(model.Teacher is not null)
+        {
+            viewModel.TeacherId = model.TeacherId;
+            viewModel.TeacherName = $"{model.Teacher.FirstName} {model.Teacher.LastName}";
         }
 
         return viewModel;
