@@ -34,14 +34,12 @@ public class StudentController : ControllerBase
     public async Task<ActionResult> GetById(int id)
     {
         var result = await _context.Students
-        .Include(student => student.Course)
         .Select(student => new StudentDetailedViewModel {
             Id = student.Id,
             FirstName = student.FirstName,
             LastName = student.LastName,
             Email = student.Email,
             PersonNumber = student.PersonNumber,
-            CourseName = student.Course.Title ?? ""
         }).SingleOrDefaultAsync(student => student.Id == id);
 
         if(result is null)
@@ -54,14 +52,12 @@ public class StudentController : ControllerBase
     public async Task<ActionResult> GetByEmailAsync(string email)
     {
         var result = await _context.Students
-        .Include(student => student.Course)
         .Select(student => new StudentDetailedViewModel {
             Id = student.Id,
             FirstName = student.FirstName,
             LastName = student.LastName,
             Email = student.Email,
             PersonNumber = student.PersonNumber,
-            CourseName = student.Course.Title ?? ""
         }).SingleOrDefaultAsync(student => student.Email == email);
 
         if(result is null)
@@ -74,14 +70,12 @@ public class StudentController : ControllerBase
     public async Task<ActionResult> GetByPersonNumberAsync(string personNumber)
     {
         var result = await _context.Students
-        .Include(student => student.Course)
         .Select(student => new StudentDetailedViewModel {
             Id = student.Id,
             FirstName = student.FirstName,
             LastName = student.LastName,
             Email = student.Email,
             PersonNumber = student.PersonNumber,
-            CourseName = student.Course.Title ?? ""
         }).SingleOrDefaultAsync(student => student.PersonNumber == personNumber);
 
         if(result is null)
@@ -126,7 +120,7 @@ public class StudentController : ControllerBase
             return NotFound();
 
 
-        student.Course = course;
+        // student.Course = course;
         
         _context.Students.Update(student);
 

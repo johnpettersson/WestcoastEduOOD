@@ -14,8 +14,6 @@ public class Student
     public string LastName { get; set; } = "";
     public string Email { get; set; } = "";
 
-    public int CourseId { get; set; }
 
-    [ForeignKey("CourseId")]
-    public Course Course { get; set; }
+    public virtual ICollection<Course>? Courses { get; set; }
 }
