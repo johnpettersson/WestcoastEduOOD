@@ -20,7 +20,7 @@ public class CourseController : ControllerBase
         _context = context;
     }
 
-    [HttpGet("list")]
+    [HttpGet("listall")]
     public async Task<ActionResult> ListAsync()
     {
         var result = await _context.Courses
@@ -112,13 +112,12 @@ public class CourseController : ControllerBase
     public async Task<ActionResult> CreateCourseAsync(CourseAddViewModel model)
     {
         if (!ModelState.IsValid)
-            return BadRequest("Info saknas");
+            return BadRequest("Invalid body!");
 
         var exists = await _context.Courses.SingleOrDefaultAsync(c => c.Title == model.Title);
 
         if (exists is not null)
-            return BadRequest($"Det finns redan en kurs med titeln {model.Title}");
-
+            return BadRequest($"There is already a course with the title: {model.Title}, it has the id: {exists.Id}");
 
         var course = new Course
         {
@@ -135,26 +134,27 @@ public class CourseController : ControllerBase
             return CreatedAtAction(nameof(GetById), routeValues, null); //skickar med null bara för att nå den överlagrade varianten av CreatedAtAction med routevalues... (╯°□°)╯︵ ┻━┻ 
         }
 
-        return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
+        return StatusCode(500);
     }
 
     [HttpPut]
-    public async Task<ActionResult> UpdateCourseAsync(CourseEditViewModel model)
+    public async Task<ActionResult> UpdateCourseAsync(CourseUpdateViewModel model)
     {
         if(!ModelState.IsValid)
-            return BadRequest("Info saknas");
+            return BadRequest("Invalid body");
 
         Course? course = await _context.Courses.SingleOrDefaultAsync(c => c.Id == model.CourseId);
 
         if(course is null)
-            return BadRequest($"Det finns ingen kurs med id: {model.CourseId}");
+            return NotFound();
+
 
         var exists = await _context.Courses.SingleOrDefaultAsync(c => c.Title == model.Title);
 
-        if (exists is not null)
-            return BadRequest($"Det finns redan en kurs med titeln {model.Title}");
+        if (exists is not null && exists.Id != model.CourseId) //den nye titeln finns redan på ett annat id än det vi försöker uppdatera
+            return BadRequest($"There is already a course with the title: {model.Title}, it has the id: {exists.Id}");
 
-        // borde aldrig bli null pga ModelState.IsValid-check ovan ^
+        // borde aldrig vara null pga ModelState.IsValid-check ovan ^
         course.Title = model.Title!; 
         course.Number = model.Number!;
         course.StartDate = model.StartDate ?? DateTime.MinValue;
@@ -173,7 +173,8 @@ public class CourseController : ControllerBase
         var course = await _context.Courses.FindAsync(id);
 
         if (course is null)
-            return BadRequest($"Det finns ingen kurs med id: {id}");
+            return NotFound();
+
 
         course.FullyBooked = !course.FullyBooked;
 
@@ -192,7 +193,7 @@ public class CourseController : ControllerBase
         var course = await _context.Courses.FindAsync(id);
 
         if (course is null)
-            return BadRequest($"Det finns ingen kurs med id: {id}");
+            return NotFound();
 
         course.Completed = !course.Completed;
         _context.Courses.Update(course);

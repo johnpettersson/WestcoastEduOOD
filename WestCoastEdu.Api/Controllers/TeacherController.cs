@@ -19,7 +19,7 @@ public class TeacherController : ControllerBase
         _context = context;
     }
 
-    [HttpGet("list")]
+    [HttpGet("listall")]
     public async Task<ActionResult> ListAsync()
     {
         var result = await _context.Teachers.Select(teacher => new TeacherListViewModel
@@ -33,7 +33,7 @@ public class TeacherController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("id/{id}")]
     public async Task<ActionResult> GetByIdAsync(int id)
     {
         var result = await _context.Teachers

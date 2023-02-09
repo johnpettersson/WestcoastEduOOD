@@ -19,7 +19,7 @@ public class StudentController : ControllerBase
         _context = context;
     }
 
-    [HttpGet("list")]
+    [HttpGet("listall")]
     public async Task<ActionResult> List()
     {
         var result = await _context.Students
@@ -31,7 +31,7 @@ public class StudentController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("id/{id}")]
     public async Task<ActionResult> GetById(int id)
     {
         Student? model = await _context.Students.Include(s => s.Courses).SingleOrDefaultAsync(student => student.Id == id);
@@ -72,17 +72,52 @@ public class StudentController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult CreateStudent(object model)
+    public async Task<ActionResult> CreateStudentAsync(StudentAddViewModel viewModel)
     {
-        //TODO: Skapa en student och spara den 
-        return Created("url_to_created_resource", new { message = "CreateStudent fungerar" });
+        if(!ModelState.IsValid)
+            return BadRequest("Invalid body");
+
+        Student student = new Student
+        {
+            FirstName = viewModel.FirstName!,
+            LastName = viewModel.LastName!,
+            PersonNumber = viewModel.PersonNumber!,
+            Email = viewModel.Email!,
+        };
+
+        await _context.Students.AddAsync(student);
+
+        if(await _context.SaveChangesAsync() > 0)
+        {
+            return CreatedAtAction(nameof(GetById), new { id = student.Id }, null);
+        }
+
+        return StatusCode(500);
     }
 
-    [HttpPut("{id}")]
-    public ActionResult UpdateStudent(int id, object model)
+    [HttpPut]
+    public async Task<ActionResult> UpdateStudentAsync(StudentUpdateViewModel viewModel)
     {
-        //TODO: Uppdatera student 
-        return NoContent();
+        if(!ModelState.IsValid)
+            return BadRequest("Invalid body!");
+
+        Student? student = await _context.Students.SingleOrDefaultAsync(s => s.Id == viewModel.StudentId);
+
+        if(student is null)
+            return NotFound();
+
+        // borde aldrig bli null pga ModelState.IsValid-check ovan ^
+        student.FirstName = viewModel.FirstName!;
+        student.LastName = viewModel.LastName!;
+        student.Email = viewModel.Email!;
+        student.PersonNumber = viewModel.PersonNumber!;
+
+        _context.Students.Update(student);
+
+        if(await _context.SaveChangesAsync() > 0)
+            return NoContent();
+
+        return StatusCode(500);
     }
 
     [HttpPatch("{studentId}/courses/add/{courseId}")]
@@ -99,7 +134,7 @@ public class StudentController : ControllerBase
             return NotFound();
 
         if(student.Courses!.Contains(course))
-            return BadRequest("Studenten har redan lagts till på den kursen");
+            return BadRequest("Student is already added to that course.");
 
         student.Courses!.Add(course);
 
@@ -108,7 +143,7 @@ public class StudentController : ControllerBase
         if(await _context.SaveChangesAsync() > 0)
             return NoContent();
 
-        return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
+        return StatusCode(500);
     }
 
     [HttpPatch("{studentId}/courses/remove/{courseId}")]
@@ -125,7 +160,7 @@ public class StudentController : ControllerBase
             return NotFound();
 
         if(!student.Courses!.Contains(course))
-            return BadRequest("Studenten har inte lagts till på den kursen");
+            return BadRequest("Student has not been added to that course.");
 
         student.Courses.Remove(course);
         _context.Students.Update(student);
@@ -133,10 +168,8 @@ public class StudentController : ControllerBase
         if(await _context.SaveChangesAsync() > 0)
             return NoContent();
 
-        return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
+        return StatusCode(500);
     }
-
-
 
     private StudentDetailedViewModel CreateStudentDetailedViewModel(Student model)
     {
@@ -156,4 +189,5 @@ public class StudentController : ControllerBase
 
         return viewmodel;
     }
+ 
 }
