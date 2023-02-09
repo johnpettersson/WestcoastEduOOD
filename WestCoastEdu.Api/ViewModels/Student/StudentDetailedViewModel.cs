@@ -11,5 +11,5 @@ public class StudentDetailedViewModel
     public string LastName { get; set; } = "";
     public string Email { get; set; } = "";
 
-    public string CourseName { get; set; } = "";
+    public List<CourseListViewModel> Courses { get; set; }
 }

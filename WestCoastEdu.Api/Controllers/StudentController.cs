@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WestcoastEdu.Api.Data;
+using WestcoastEdu.Api.Models;
 using WestcoastEdu.Api.ViewModels;
 
 namespace WestcoastEdu.Api.Controllers;
@@ -33,55 +34,41 @@ public class StudentController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult> GetById(int id)
     {
-        var result = await _context.Students
-        .Select(student => new StudentDetailedViewModel {
-            Id = student.Id,
-            FirstName = student.FirstName,
-            LastName = student.LastName,
-            Email = student.Email,
-            PersonNumber = student.PersonNumber,
-        }).SingleOrDefaultAsync(student => student.Id == id);
+        Student? model = await _context.Students.Include(s => s.Courses).SingleOrDefaultAsync(student => student.Id == id);
 
-        if(result is null)
+        if(model is null)
             return NotFound();
 
-        return Ok(result);
+        StudentDetailedViewModel viewModel = CreateStudentDetailedViewModel(model);
+
+        return Ok(viewModel);
     }
 
     [HttpGet("email/{email}")]
     public async Task<ActionResult> GetByEmailAsync(string email)
     {
-        var result = await _context.Students
-        .Select(student => new StudentDetailedViewModel {
-            Id = student.Id,
-            FirstName = student.FirstName,
-            LastName = student.LastName,
-            Email = student.Email,
-            PersonNumber = student.PersonNumber,
-        }).SingleOrDefaultAsync(student => student.Email == email);
+        Student? model = await _context.Students.Include(s => s.Courses).SingleOrDefaultAsync(student => student.Email == email);
 
-        if(result is null)
+        if(model is null)
             return NotFound();
 
-        return Ok(result);
+        StudentDetailedViewModel viewModel = CreateStudentDetailedViewModel(model);
+
+        return Ok(viewModel);
     }
 
     [HttpGet("personnumber/{personNumber}")]
     public async Task<ActionResult> GetByPersonNumberAsync(string personNumber)
     {
-        var result = await _context.Students
-        .Select(student => new StudentDetailedViewModel {
-            Id = student.Id,
-            FirstName = student.FirstName,
-            LastName = student.LastName,
-            Email = student.Email,
-            PersonNumber = student.PersonNumber,
-        }).SingleOrDefaultAsync(student => student.PersonNumber == personNumber);
 
-        if(result is null)
+        Student? model = await _context.Students.Include(s => s.Courses).SingleOrDefaultAsync(student => student.PersonNumber == personNumber);
+
+        if(model is null)
             return NotFound();
 
-        return Ok(result);
+        StudentDetailedViewModel viewModel = CreateStudentDetailedViewModel(model);
+
+        return Ok(viewModel);
     }
 
     [HttpPost]
@@ -98,35 +85,75 @@ public class StudentController : ControllerBase
         return NoContent();
     }
 
-    [HttpGet("{studentId}/courses")]
-    public ActionResult GetCourses(int studentId)
-    {
-        //TODO: Hämta alla kurser som studenten har
-        return NoContent();
-    }
-
-
     [HttpPatch("{studentId}/courses/add/{courseId}")]
-    public async Task<ActionResult> AddCourseAsync(int courseId, int studentId)
+    public async Task<ActionResult> AddCourseAsync(int studentId, int courseId)
     {
         var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId);
 
         if(course is null)
             return NotFound();
 
-        var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == studentId);
+        var student = await _context.Students.Include(s => s.Courses).FirstOrDefaultAsync(s => s.Id == studentId);
 
         if(student is null)
             return NotFound();
 
+        if(student.Courses!.Contains(course))
+            return BadRequest("Studenten har redan lagts till på den kursen");
 
-        // student.Course = course;
-        
+        student.Courses!.Add(course);
+
         _context.Students.Update(student);
 
         if(await _context.SaveChangesAsync() > 0)
             return NoContent();
 
         return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
+    }
+
+    [HttpPatch("{studentId}/courses/remove/{courseId}")]
+    public async Task<ActionResult> RemoveCourseAsync(int studentId, int courseId)
+    {
+        var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId);
+
+        if(course is null)
+            return NotFound();
+
+        var student = await _context.Students.Include(s => s.Courses).FirstOrDefaultAsync(s => s.Id == studentId);
+
+        if(student is null)
+            return NotFound();
+
+        if(!student.Courses!.Contains(course))
+            return BadRequest("Studenten har inte lagts till på den kursen");
+
+        student.Courses.Remove(course);
+        _context.Students.Update(student);
+
+        if(await _context.SaveChangesAsync() > 0)
+            return NoContent();
+
+        return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
+    }
+
+
+
+    private StudentDetailedViewModel CreateStudentDetailedViewModel(Student model)
+    {
+        var viewmodel = new StudentDetailedViewModel
+        {
+            Id = model.Id,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            PersonNumber = model.PersonNumber,
+            Email = model.Email
+        };
+
+        if(model.Courses is not null)
+        {
+            viewmodel.Courses = model.Courses.Select(course => new CourseListViewModel{Id = course.Id, Title = course.Title}).ToList();
+        }
+
+        return viewmodel;
     }
 }

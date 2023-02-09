@@ -24,7 +24,8 @@ public class CourseController : ControllerBase
     public async Task<ActionResult> ListAsync()
     {
         var result = await _context.Courses
-        .Select(c => new CourseListViewModel{
+        .Select(c => new CourseListViewModel
+        {
             Id = c.Id,
             Title = c.Title ?? ""
         }).ToListAsync();
@@ -35,28 +36,17 @@ public class CourseController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult> GetByIdAsync(int id)
     {
-        var result = await _context.Courses
+        Course? model = await _context.Courses
         .Include(c => c.Students)
         .Include(c => c.Teacher)
-        .Select(c => new CourseDetailedViewModel
-        {
-            Id = c.Id,
-            Completed = c.Completed,
-            FullyBooked = c.FullyBooked,
-            StartDate = c.StartDate,
-            Title = c.Title ?? "",
-            Number = c.Number,
-            Students = c.Students.Select(student => new StudentListViewModel{
-                Id = student.Id,
-                FirstName = student.FirstName,
-                LastName = student.LastName,
-            }).ToList()
-        }).FirstOrDefaultAsync(c => c.Id == id);
+        .FirstOrDefaultAsync(c => c.Id == id);
 
-        if(result is null)
+        if (model is null)
             return NotFound();
 
-        return Ok(result);
+        CourseDetailedViewModel viewModel = CreateCourseDetailedViewModel(model);
+
+        return Ok(viewModel);
     }
 
     [HttpGet("number/{courseNumber}")]
@@ -67,7 +57,7 @@ public class CourseController : ControllerBase
         .Include(c => c.Teacher)
         .Select(c => new CourseDetailedViewModel
         {
-            
+
             Id = c.Id,
             Completed = c.Completed,
             FullyBooked = c.FullyBooked,
@@ -76,11 +66,11 @@ public class CourseController : ControllerBase
             Number = c.Number
         }).FirstOrDefaultAsync(c => c.Number == courseNumber);
 
-        if(result is null)
+        if (result is null)
             return NotFound();
 
         return Ok(result);
-    }   
+    }
 
     [HttpGet("title/{title}")]
     public async Task<ActionResult> GetByCourseTitleAsync(string title)
@@ -90,7 +80,7 @@ public class CourseController : ControllerBase
         .Include(c => c.Teacher)
         .Select(c => new CourseDetailedViewModel
         {
-            
+
             Id = c.Id,
             Completed = c.Completed,
             FullyBooked = c.FullyBooked,
@@ -99,7 +89,7 @@ public class CourseController : ControllerBase
             Number = c.Number
         }).FirstOrDefaultAsync(c => c.Title == title);
 
-        if(result is null)
+        if (result is null)
             return NotFound();
 
         return Ok(result);
@@ -110,7 +100,8 @@ public class CourseController : ControllerBase
     {
         var result = await _context.Courses
         .Where(c => c.StartDate.Date == date)
-        .Select(c => new CourseListViewModel{
+        .Select(c => new CourseListViewModel
+        {
             Id = c.Id,
             Title = c.Title ?? ""
         }).ToListAsync();
@@ -121,25 +112,25 @@ public class CourseController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> CreateCourseAsync(CourseAddViewModel model)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return BadRequest("Info saknas");
 
         var exists = await _context.Courses.SingleOrDefaultAsync(c => c.Title == model.Title);
 
-        if(exists is not null)
+        if (exists is not null)
             return BadRequest($"Det finns redan en kurs med titeln {model.Title}");
 
 
         var course = new Course
         {
-            Title = model.Title,
-            Number = model.Number,
+            Title = model.Title!,
+            Number = model.Number!,
             StartDate = model.StartDate ?? DateTime.MinValue
         };
 
         await _context.Courses.AddAsync(course);
 
-        if(await _context.SaveChangesAsync() > 0) 
+        if (await _context.SaveChangesAsync() > 0)
             return Created(nameof(GetByIdAsync), new { id = course.Id });
 
         return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
@@ -175,19 +166,19 @@ public class CourseController : ControllerBase
     [HttpPatch("fullybooked/{courseId}")]
     public async Task<ActionResult> MarkCourseFullyBookedAsync(int id)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return BadRequest("Info saknas");
 
         var course = await _context.Courses.FindAsync(id);
 
-        if(course is null)
+        if (course is null)
             return BadRequest($"Det finns ingen kurs med id: {id}");
 
         course.FullyBooked = true;
 
         _context.Courses.Update(course);
 
-        if(await _context.SaveChangesAsync() > 0)
+        if (await _context.SaveChangesAsync() > 0)
             return NoContent();
 
         return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
@@ -207,12 +198,12 @@ public class CourseController : ControllerBase
     {
         var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId);
 
-        if(course is null)
+        if (course is null)
             return NotFound();
 
         var teacher = await _context.Teachers.FirstOrDefaultAsync(s => s.Id == teacherId);
 
-        if(teacher is null)
+        if (teacher is null)
             return NotFound();
 
 
@@ -220,9 +211,37 @@ public class CourseController : ControllerBase
 
         _context.Courses.Update(course);
 
-        if(await _context.SaveChangesAsync() > 0)
+        if (await _context.SaveChangesAsync() > 0)
             return NoContent();
 
         return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
+    }
+
+
+
+
+    private CourseDetailedViewModel CreateCourseDetailedViewModel(Course model)
+    {
+        var viewModel =  new CourseDetailedViewModel
+        {
+            Id = model.Id,
+            Completed = model.Completed,
+            FullyBooked = model.FullyBooked,
+            StartDate = model.StartDate,
+            Title = model.Title,
+            Number = model.Number,
+        };
+
+        if(model.Students is not null)
+        {
+            viewModel.Students = model.Students.Select(student => new StudentListViewModel
+            {
+                Id = student.Id,
+                FirstName = student.FirstName,
+                LastName = student.LastName
+            }).ToList();
+        }
+
+        return viewModel;
     }
 }
