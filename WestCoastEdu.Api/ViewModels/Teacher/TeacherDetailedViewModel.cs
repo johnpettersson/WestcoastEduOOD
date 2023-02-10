@@ -15,5 +15,5 @@ public class TeacherDetailedViewModel
 
     public ICollection<CourseListViewModel>? Courses { get; set; }
 
-    public ICollection<Subject>? Subjects { get; set; }
+    public ICollection<SubjectSimpleViewModel>? Subjects { get; set; }
 }

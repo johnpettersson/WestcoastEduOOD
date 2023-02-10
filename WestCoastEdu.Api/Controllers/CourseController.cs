@@ -57,7 +57,6 @@ public class CourseController : ControllerBase
         .Include(c => c.Teacher)
         .Select(c => new CourseDetailedViewModel
         {
-
             Id = c.Id,
             Completed = c.Completed,
             FullyBooked = c.FullyBooked,
@@ -226,7 +225,26 @@ public class CourseController : ControllerBase
         if (await _context.SaveChangesAsync() > 0)
             return NoContent();
 
-        return StatusCode(500, "(╯°□°)╯︵ ┻━┻");
+        return StatusCode(500);
+    }
+
+    [HttpPatch("{courseId}/teacher/remove")]
+    public async Task<ActionResult> RemoveTeacherAsync(int courseId)
+    {
+        var course = await _context.Courses.Include(course => course.Teacher).FirstOrDefaultAsync(c => c.Id == courseId);
+
+        if (course is null)
+            return NotFound();
+
+        course.Teacher = null;
+        course.TeacherId = null;
+
+        _context.Courses.Update(course);
+
+        if (await _context.SaveChangesAsync() > 0)
+            return NoContent();
+
+        return StatusCode(500);
     }
 
     private CourseDetailedViewModel CreateCourseDetailedViewModel(Course model)

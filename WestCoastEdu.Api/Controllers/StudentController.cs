@@ -71,6 +71,23 @@ public class StudentController : ControllerBase
         return Ok(viewModel);
     }
 
+    [HttpGet("{id}/courses")]
+    public async Task<ActionResult> GetCoursesAsync(int id)
+    {
+        Student? student = await _context.Students.Include(s => s.Courses).FirstOrDefaultAsync(s => s.Id == id);
+
+        if(student is null)
+            return NotFound();
+
+        List<CourseListViewModel> courses = student.Courses!.Select(course => new CourseListViewModel
+        {
+            Id = course.Id,
+            Title = course.Title
+        }).ToList();
+
+        return Ok(courses);
+    }
+
     [HttpPost]
     public async Task<ActionResult> CreateStudentAsync(StudentAddViewModel viewModel)
     {
@@ -123,7 +140,7 @@ public class StudentController : ControllerBase
     [HttpPatch("{studentId}/courses/add/{courseId}")]
     public async Task<ActionResult> AddCourseAsync(int studentId, int courseId)
     {
-        var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId);
+        var course = await _context.Courses.FindAsync(courseId);
 
         if(course is null)
             return NotFound();
@@ -149,7 +166,7 @@ public class StudentController : ControllerBase
     [HttpPatch("{studentId}/courses/remove/{courseId}")]
     public async Task<ActionResult> RemoveCourseAsync(int studentId, int courseId)
     {
-        var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId);
+        var course = await _context.Courses.FindAsync(courseId);
 
         if(course is null)
             return NotFound();
